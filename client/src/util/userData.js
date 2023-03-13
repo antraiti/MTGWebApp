@@ -31,7 +31,16 @@ export default function userData() {
         return null
   };
 
-  const [userData, setUserData] = useState(getUserData());
+  const removeUserData = () => {
+    const userData = localStorage.getItem('userdata');
+    if(!userData)
+      return null
+    
+      localStorage.removeItem('userdata');
+      return null;
+  };
+
+  const [user, setUserData] = useState(getUserData());
   const [userName] = useState(getUsername());
   const [userToken] = useState(getUsertoken());
 
@@ -42,8 +51,9 @@ export default function userData() {
 
   return {
     setUserData: saveUserData,
-    userData,
+    user,
     userName,
-    userToken
+    userToken,
+    removeUserData
   }
 }

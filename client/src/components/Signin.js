@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import "./../App.css"
 import Container from "react-bootstrap/Container";
+import { useNavigate  } from "react-router-dom";
 
 async function loginUser(credentials) {
     return fetch('http://localhost:5000/login', {
@@ -18,13 +19,12 @@ async function loginUser(credentials) {
         if(data.status >= 400) {
             throw new Error("Server responds with error!");
         }
-
         return data.json();
     })
 }
 
 export const Signin = ({ setUserData }) => {
-
+    const navigate = useNavigate();
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
 
@@ -35,6 +35,9 @@ export const Signin = ({ setUserData }) => {
           password
         });
         setUserData(userData);
+
+        navigate('/');
+        navigate(0);
       }
 
     return (
