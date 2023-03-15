@@ -17,6 +17,8 @@ import { Signin } from './components/Signin';
 import userData from './util/userData';
 import './App.css';
 import { Weeklies } from './components/Weeklies';
+import { Decks } from './components/Decks';
+
 
 function App() {
 
@@ -46,6 +48,7 @@ function App() {
               <Nav.Link as={Link} to="/Rules">Rules</Nav.Link>
               <Nav.Link as={Link} to="/Banlist">Banlist</Nav.Link>
               {userToken && <Nav.Link as={Link} to="/Weeklies">Weeklies</Nav.Link>}
+              {userToken && <Nav.Link as={Link} to="/Decks">Decks</Nav.Link>}
             </Nav>
             <Nav>
               {!user && <Nav.Link as={Link} to="/Signin">
@@ -63,6 +66,7 @@ function App() {
             <Route path="/Rules" element={<Rules/>}/>
             <Route path="/Signin" element={<Signin setUserData={setUserData}/>}/>
             <Route path="/Weeklies" element={<Weeklies/>}/>
+            <Route path="/Decks" element={<Decks/>}/>
           </Routes>
         </div>
       </div>
