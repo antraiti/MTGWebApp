@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import './Rules.css';
 import './../App.css';
-import useToken from '../util/userData';
+import useToken from '../util/UserData';
 
 
 export const Weeklies = () => {

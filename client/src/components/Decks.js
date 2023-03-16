@@ -5,17 +5,35 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import './Rules.css';
 import './../App.css';
-import userData from '../util/userData';
+import userData from '../util/UserData';
 import Button from 'react-bootstrap/Button';
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory, { Type }  from 'react-bootstrap-table2-editor';
 
 
 //This should be moved to util since we will use it elsewhere
-async function getcolors() {
+async function getColors() {
     return fetch('http://localhost:5000/colors', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
+    }})
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error("Server responds with error!");
+        }
+        return data.json();
+    })
+}
+
+async function getDecks(token) {
+    return fetch('http://localhost:5000/deck', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
     }})
     .then(data => {
         if(data.status >= 400) {
@@ -37,7 +55,25 @@ async function newDeck(token) {
     })
     .then(data => {
         if(data.status >= 400) {
-            throw new Error(data.message + data.body);
+            throw new Error(data.message);
+        }
+        return data.json();
+    })
+}
+
+async function updateDeck(token, deck) {
+    return fetch('http://localhost:5000/deck', {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+    },
+    body: JSON.stringify(deck)
+    })
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error(data.message);
         }
         return data.json();
     })
@@ -46,32 +82,85 @@ async function newDeck(token) {
 export const Decks = () => {
     const { user, setUserData, userName, userToken, removeUserData } = userData();
     const [colors, setColors] = useState([]);
+    const [decks, setDecks] = useState([]);
+    const createDeck = () => {
+        newDeck(userToken);
+    }
+    const submitDeck = (rowinfo) => {
+
+        updateDeck(userToken, rowinfo);
+    }
+    const colHeaderStyle = {backgroundColor: 'white'}
 
     useEffect(() => {
         let mounted = true;
-        getcolors()
+        getColors()
           .then(items => {
             if(mounted) {
               setColors(items)
             }
           })
+        getDecks(userToken)
+        .then(items => {
+        if(mounted) {
+            setDecks(items)
+        }
+        })
         return () => mounted = false;
       }, [])
 
-    const createDeck = () => {
-        newDeck(userToken);
-    }
-
+    const columns = [{
+        dataField: 'name',
+        text: 'Deck Name',
+        headerStyle: colHeaderStyle
+      }, {
+        dataField: 'commander',
+        text: 'Commander',
+        headerStyle: colHeaderStyle
+      }, {
+        dataField: 'partner',
+        text: 'Partner',
+        headerStyle: colHeaderStyle
+      }, {
+        dataField: 'companion',
+        text: 'Companion',
+        headerStyle: colHeaderStyle
+      }, {
+        dataField: 'identityid',
+        text: 'Color',
+        headerStyle: colHeaderStyle,
+        formatter: (cell, row) => {
+            return colors.find(x => x.id == cell).name;
+          },
+        editor: {
+            type: Type.SELECT,
+            options: colors.map((colorinfo) => ({value: colorinfo.id, label: colorinfo.name}))
+          }
+      }, {
+        dataField: 'power',
+        text: 'Power',
+        headerStyle: colHeaderStyle
+      }, {
+        dataField: 'link',
+        text: 'Deck Link',
+        headerStyle: colHeaderStyle
+      }];
+      
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
                 <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
-                    <h2 className="section-header">{userName}</h2>
-                    <Button onClick={createDeck} style={{backgroundColor: "#5483df", borderWidth: "0px", justifySelf: "right"}}>New Deck</Button>
-
-                    <Form.Select aria-label="Color Identity">
-                        {colors.map((colorinfo) => (<option>{colorinfo.name}</option>))}
-                    </Form.Select>
+                    <h2 className="section-header" style={{marginBottom: "20px"}}>Decks </h2>
+                    <Button onClick={createDeck} style={{backgroundColor: "#5483df", borderWidth: "0px", justifySelf: "right", marginBottom: "20px"}}>New Deck</Button>
+                    <BootstrapTable rowStyle={{backgroundColor: "white"}} 
+                        keyField="id"
+                        data={ decks }
+                        columns={ columns }
+                        striped hover condensed
+                        cellEdit={ cellEditFactory({
+                             mode: 'dbclick',
+                             afterSaveCell: (oldValue, newValue, row, column) => { submitDeck(row) }
+                        }) }/>
                 </Card>
             </Row>
         </Container>

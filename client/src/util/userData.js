@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function userData() {
+export default function UserData() {
   const getUserData = () => {
     const userDataString = JSON.parse(localStorage.getItem('userdata'));
     if(userDataString)
