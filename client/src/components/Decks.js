@@ -10,7 +10,6 @@ import Button from 'react-bootstrap/Button';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory, { Type }  from 'react-bootstrap-table2-editor';
 
-
 //This should be moved to util since we will use it elsewhere
 async function getColors() {
     return fetch('http://localhost:5000/colors', {
@@ -79,6 +78,21 @@ async function updateDeck(token, deck) {
     })
 }
 
+async function getCardName(inputtext) {
+    return fetch('https://api.scryfall.com/cards/named?fuzzy=' + inputtext, {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }})
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error(data.message);
+        }
+        return data.json();
+    })
+}
+
 export const Decks = () => {
     const { user, setUserData, userName, userToken, removeUserData } = userData();
     const [colors, setColors] = useState([]);
@@ -86,9 +100,25 @@ export const Decks = () => {
     const createDeck = () => {
         newDeck(userToken);
     }
-    const submitDeck = (rowinfo) => {
-
-        updateDeck(userToken, rowinfo);
+    const submitDeck = (rowinfo, columninfo) => {
+        if(columninfo.dataField == 'commander') {
+            getCardName(rowinfo.commander).then(items => {
+                rowinfo.commander = items.name;
+                updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
+            });
+        } else if (columninfo.dataField == 'partner') {
+            getCardName(rowinfo.partner).then(items => {
+                rowinfo.partner = items.name;
+                updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
+            });
+        } else if (columninfo.dataField == 'companion') {
+            getCardName(rowinfo.companion).then(items => {
+                rowinfo.companion = items.name;
+                updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
+            });
+        } else {
+            updateDeck(userToken, rowinfo);
+        }
     }
     const colHeaderStyle = {backgroundColor: 'white'}
 
@@ -130,7 +160,9 @@ export const Decks = () => {
         text: 'Color',
         headerStyle: colHeaderStyle,
         formatter: (cell, row) => {
-            return colors.find(x => x.id == cell).name;
+            const colorres = colors.find(x => x.id == cell)
+            if(colorres)
+                return colorres.name;
           },
         editor: {
             type: Type.SELECT,
@@ -159,7 +191,7 @@ export const Decks = () => {
                         striped hover condensed
                         cellEdit={ cellEditFactory({
                              mode: 'dbclick',
-                             afterSaveCell: (oldValue, newValue, row, column) => { submitDeck(row) }
+                             afterSaveCell: (oldValue, newValue, row, column) => { submitDeck(row, column) }
                         }) }/>
                 </Card>
             </Row>
