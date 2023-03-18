@@ -2,8 +2,8 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
-import './Home.css';
-import "./../App.css"
+import './Home.scss';
+import "./../App.scss"
 
 export const Home = () => {
     return (

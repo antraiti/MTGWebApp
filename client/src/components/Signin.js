@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import "./../App.css"
+import "./../App.scss"
 import Container from "react-bootstrap/Container";
 import { useNavigate  } from "react-router-dom";
 
