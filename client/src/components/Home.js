@@ -8,7 +8,8 @@ import "./../App.scss"
 export const Home = () => {
     return (
         <div class="site-container full-vh">
-        <Container class="container-sm">
+        <Container fluid="sm">
+            <div class="crown-container"></div>
             <div class="inner-container full-vh flex-column flex-align-space-between">
                 <section className="jumbotron text-center">
                     <div className="container">
