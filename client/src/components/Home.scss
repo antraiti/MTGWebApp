@@ -1,3 +1,6 @@
+@import '../_fonts.scss';
+@import '../variables.scss';
+
 :root {
     --jumbotron-padding-y: 3rem;
   }
@@ -21,6 +24,7 @@
   
   .jumbotron-heading {
     font-weight: 700;
+    font-size: 5rem;
   }
   
   .jumbotron .container {
@@ -43,4 +47,53 @@
     font-size: larger;
     text-align: center;
     padding: 1vh;
+  }
+
+  .site-container {
+    background: url('../assets/images/Crystal-Grotto-Art.jpg') no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: #999;
+  }
+
+  .card-group {
+    margin-bottom: 20px;
+  }
+
+  .cta-container {
+    button {
+      padding: 20px;
+      margin: 10px;
+      border: solid 2px gold;
+      background-color: #ffffff90;      
+      border-radius: 5px;
+      font-size: 30px;
+      transition: 0.5s;
+
+      &:hover {
+        background-color: #ffffffff;
+        padding: 30px 60px;
+        margin: 0;
+        box-shadow: 0px 0px 40px 20px #00000030;
+      }
+    }
+  }
+
+  .card-footer-container {
+    .footer-header {
+      font-size: 2.5rem;
+      color: white;
+      text-align: center;
+      position: relative;
+
+      &::after {
+        content: '';
+        width: 100%;
+        background: linear-gradient(90deg, transparent 15%, gold 50%, transparent 85%);
+        height: 2px;
+        position: absolute;
+        left:0;
+        bottom:0;
+      }
+    }
   }
