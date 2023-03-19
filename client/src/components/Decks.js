@@ -3,8 +3,8 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import './Rules.css';
-import './../App.css';
+import './Rules.scss';
+import './../App.scss';
 import userData from '../util/UserData';
 import Button from 'react-bootstrap/Button';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -101,17 +101,17 @@ export const Decks = () => {
         newDeck(userToken);
     }
     const submitDeck = (rowinfo, columninfo) => {
-        if(columninfo.dataField == 'commander') {
+        if(columninfo.dataField === 'commander') {
             getCardName(rowinfo.commander).then(items => {
                 rowinfo.commander = items.name;
                 updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
             });
-        } else if (columninfo.dataField == 'partner') {
+        } else if (columninfo.dataField === 'partner') {
             getCardName(rowinfo.partner).then(items => {
                 rowinfo.partner = items.name;
                 updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
             });
-        } else if (columninfo.dataField == 'companion') {
+        } else if (columninfo.dataField === 'companion') {
             getCardName(rowinfo.companion).then(items => {
                 rowinfo.companion = items.name;
                 updateDeck(userToken, rowinfo).then(() =>{window.location.reload(false);});
@@ -160,7 +160,7 @@ export const Decks = () => {
         text: 'Color',
         headerStyle: colHeaderStyle,
         formatter: (cell, row) => {
-            const colorres = colors.find(x => x.id == cell)
+            const colorres = colors.find(x => x.id === cell)
             if(colorres)
                 return colorres.name;
           },

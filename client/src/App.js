@@ -15,7 +15,7 @@ import { Banlist } from './components/Banlist';
 import { Rules } from './components/Rules';
 import { Signin } from './components/Signin';
 import userData from './util/UserData';
-import './App.css';
+import './App.scss';
 import { Weeklies } from './components/Weeklies';
 import { Decks } from './components/Decks';
 

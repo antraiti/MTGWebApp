@@ -2,8 +2,8 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';import "./Banlist.css"
-import "./../App.css"
+import Tooltip from 'react-bootstrap/Tooltip';import "./Banlist.scss"
+import "./../App.scss"
 
 export const Banlist = () => {
     return (

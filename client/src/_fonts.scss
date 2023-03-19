@@ -1,0 +1,26 @@
+@font-face {
+    font-family:'Beleren Bold';
+    src: url('./assets/fonts/Beleren2016-Bold.woff');
+}
+
+@font-face {
+    font-family:'Beleren Bold Small Caps';
+    src: url('./assets/fonts/Beleren2016SmallCaps-Bold.woff');
+}
+
+@font-face {
+    font-family:'Beleren Bold Small Caps Bold Italic';
+    src: url('./assets/fonts/Beleren2016SmallCaps-BoldItalic.woff');
+}
+
+.mtg-font {
+    font-family:'Beleren Bold';
+}
+
+.mtg-font-bold {
+    font-family:'Beleren Bold Small Caps';
+}
+
+.mtg-font-bold-italic {
+    font-family:'Beleren Bold Small Caps Bold Italic';
+}

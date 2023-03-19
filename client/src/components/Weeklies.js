@@ -2,8 +2,8 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import './Rules.css';
-import './../App.css';
+import './Rules.scss';
+import './../App.scss';
 import useToken from '../util/UserData';
 
 

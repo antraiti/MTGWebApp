@@ -1,0 +1,58 @@
+@import './_fonts.scss';
+@import './_variables.scss';
+
+.App {
+  text-align: left;
+}
+
+.Label {
+  color: white;
+}
+
+.navbar.navigation-bar {
+  background-color: #28293d;
+  border-style: solid;
+  border-color: #5483df;
+  border-width: 0;
+  border-bottom-width: 1px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-align-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-align-space-center {
+  display: flex;
+  justify-content: center;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.fullheight {
+  height: 100%;
+}
+
+.full-vh {
+  height: calc(100vh - $navbar-height);
+}
+
+.full-vw {
+  width: 100vw;
+}
+
+.flex-grow {
+  flex: 1 1 100%;
+}
