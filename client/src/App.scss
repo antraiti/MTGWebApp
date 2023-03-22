@@ -5,6 +5,26 @@
   text-align: left;
 }
 
+.card-footer-container {
+  .footer-header {
+    font-size: 2.5rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    margin-bottom: 15px;
+
+    &::after {
+      content: '';
+      width: 100%;
+      background: linear-gradient(90deg, transparent 15%, gold 50%, transparent 85%);
+      height: 2px;
+      position: absolute;
+      left:0;
+      bottom:0;
+    }
+  }
+}
+
 .btn-standard {
   color: black;
   background-color: rgb(233, 233, 68) !important;

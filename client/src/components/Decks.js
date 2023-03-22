@@ -3,12 +3,11 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import './Rules.scss';
-import './../App.scss';
 import userData from '../util/UserData';
 import Button from 'react-bootstrap/Button';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory, { Type }  from 'react-bootstrap-table2-editor';
+import './../App.scss';
 
 //This should be moved to util since we will use it elsewhere
 async function getColors() {
@@ -180,10 +179,10 @@ export const Decks = () => {
       
     return (
         <Container style={{ padding: "20px" }}>
-            <Row>
+            <div class="card-footer-container">
+                <div class="footer-header mtg-font-bold">Decks</div>
                 <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
-                    <h2 className="section-header" style={{marginBottom: "20px"}}>Decks </h2>
-                    <Button onClick={createDeck} style={{backgroundColor: "#5483df", borderWidth: "0px", justifySelf: "right", marginBottom: "20px"}}>New Deck</Button>
+                    <Button onClick={createDeck} type="button" variant="standard" style={{textAlign: "ceneter", padding: "2px", marginBottom: "10px"}}>New Deck</Button>
                     <BootstrapTable rowStyle={{backgroundColor: "white"}} 
                         keyField="id"
                         data={ decks }
@@ -194,7 +193,7 @@ export const Decks = () => {
                              afterSaveCell: (oldValue, newValue, row, column) => { submitDeck(row, column) }
                         }) }/>
                 </Card>
-            </Row>
+            </div>
         </Container>
     )
 }

@@ -27,11 +27,10 @@
   font-size: 4rem;
   position: relative;
   z-index: 1;
-  color: black;
+  color: white;
 
   &::before {
     content: '';
-    background: url('../assets/images/crown-floating.png') no-repeat;
     background-size: cover;
     position: absolute;
     width: 116%;
@@ -106,25 +105,6 @@
       padding: 30px 60px;
       margin: 0;
       box-shadow: 0px 0px 40px 20px #0000007b;
-    }
-  }
-}
-
-.card-footer-container {
-  .footer-header {
-    font-size: 2.5rem;
-    color: white;
-    text-align: center;
-    position: relative;
-
-    &::after {
-      content: '';
-      width: 100%;
-      background: linear-gradient(90deg, transparent 15%, gold 50%, transparent 85%);
-      height: 2px;
-      position: absolute;
-      left:0;
-      bottom:0;
     }
   }
 }

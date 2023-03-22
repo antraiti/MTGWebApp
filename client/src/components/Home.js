@@ -9,26 +9,13 @@ export const Home = () => {
     return (
         <div class="site-container full-vh">
         <Container fluid="sm">
-            <div class="crown-container"></div>
-            <div class="inner-container full-vh flex-column flex-align-space-between">
+            <div class="inner-container full-vh flex-column">
                 <section className="jumbotron text-center">
                     <div className="container">
                         <h1 className="jumbotron-heading mtg-font-bold">Better Brawl</h1>
                         <p className="lead">An alternative multiplayer format.</p>
                     </div>
                 </section>
-
-                <div class="cta-container flex-row flex-align-space-between">
-                    <button class="mtg-font">
-                        Learn the  Rules
-                    </button>
-                    <button class="mtg-font">
-                        Build a Deck
-                    </button>
-                    <button class="mtg-font">
-                        Explore the Banlist
-                    </button>
-                </div>
 
                 <div class="card-footer-container">
                     <div class="footer-header mtg-font-bold">Quick Ruleset</div>
