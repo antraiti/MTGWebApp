@@ -17,6 +17,18 @@ export const Home = () => {
                     </div>
                 </section>
 
+                {/* <div class="cta-container flex-row flex-align-space-between">
+                    <button class="mtg-font">
+                        Learn the  Rules
+                    </button>
+                    <button class="mtg-font">
+                        Build a Deck
+                    </button>
+                    <button class="mtg-font">
+                        Explore the Banlist
+                    </button>
+                </div> */}
+
                 <div class="card-footer-container">
                     <div class="footer-header mtg-font-bold">Quick Ruleset</div>
                     <CardGroup>
