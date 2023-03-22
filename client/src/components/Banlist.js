@@ -8,7 +8,7 @@ import "./../App.scss"
 export const Banlist = () => {
     return (
         <Container style={{ padding: "20px" }}>
-            <Card style={{ backgroundColor: "#28293d", padding: "20px" }}>
+            <Card style={{ backgroundColor: "#232323", padding: "20px" }}>
                 <h2 className="banned-header">Banned Cards:</h2>
                 <p className="banned-p">Primary upkept banlist is here: <a href="https://deckstats.net/decks/148092/2204198-bb-banlist" target="_blank" rel="noopener noreferrer" title="Link to banlist on deckstats">https://deckstats.net/decks/148092/2204198-bb-banlist</a></p>
                 <ul>

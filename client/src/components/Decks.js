@@ -181,7 +181,7 @@ export const Decks = () => {
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
-                <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
+                <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <h2 className="section-header" style={{marginBottom: "20px"}}>Decks </h2>
                     <Button onClick={createDeck} style={{backgroundColor: "#5483df", borderWidth: "0px", justifySelf: "right", marginBottom: "20px"}}>New Deck</Button>
                     <BootstrapTable rowStyle={{backgroundColor: "white"}} 

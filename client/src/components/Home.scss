@@ -44,10 +44,11 @@
 
 .jumbotron .container {
   max-width: 40rem;
-}
+}   
 
 .card {
   font-weight: 400;
+  box-shadow: 0px 0px 10px 10px #00000014;
 }
 
 .infocard-h {
@@ -65,10 +66,13 @@
 }
 
 .site-container {
-  background: url('../assets/images/Crystal-Grotto-Art.jpg') no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  background-color: #999;
+  &:before {
+    background: url('../assets/images/Crystal-Grotto-Art.jpg') no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    -webkit-mask-image: linear-gradient(black, transparent);
+    mask-image: linear-gradient(black, transparent);
+  }
 }
 
 .card-group {
@@ -79,29 +83,29 @@
   button {
     padding: 20px;
     margin: 10px;
-    border: solid 2px gold;
+    border: gold;
     border-radius: 5px;
     font-size: 30px;
-    transition: 0.5s;
+    transition: 0.1s;
+    color: white;
+    box-shadow: 0px 0px 10px 10px #00000014;
 
     &:nth-child(1) {
-      background-color: #ddddff90;      
+      background-color: #232323;      
 
     }
     &:nth-child(2) {
-      background-color: #ddeeff90;      
+      background-color: #232323;      
 
     }
     &:nth-child(3) {
-      background-color: #eeddff90;      
-
+      background-color: #232323;
     }
 
     &:hover {
-      background-color: #ffffffff;
       padding: 30px 60px;
       margin: 0;
-      box-shadow: 0px 0px 40px 20px #00000030;
+      box-shadow: 0px 0px 40px 20px #0000007b;
     }
   }
 }

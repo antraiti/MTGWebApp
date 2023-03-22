@@ -13,7 +13,7 @@ export const Weeklies = () => {
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
-                <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
+                <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <h2 className="section-header">{token}</h2>
                 </Card>
             </Row>

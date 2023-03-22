@@ -9,7 +9,7 @@ export const Rules = () => {
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
-                <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
+                <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <h2 className="section-header">Deck Requirements and Restrictions:</h2>
                     <ul>
                         <li className="section-li">60 card deck</li>
@@ -17,12 +17,12 @@ export const Rules = () => {
                         <li className="section-li">All cards in the deck must be in the color identity of your commander(s)</li>
                         <li className="section-li">One copy of any card, except basic lands</li>
                         <li className="section-li">Decks may not contain any copies of cards on the banlist (see below)</li>
-                        <li className="section-li">Decks may also have sideboards of up to 15 cards</li>
+                        <li className="section-li">Decks may also have sideboards of up to 5 cards</li>
                     </ul>
                 </Card>
             </Row>
             <Row>
-                <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
+                <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <h2 className="section-header">Basic Game Rules:</h2>
                     <ul>
                         <li className="section-li">2+ players</li>
@@ -34,7 +34,7 @@ export const Rules = () => {
                 </Card>
             </Row>
             <Row>
-                <Card style={{ backgroundColor: "#28293d", padding: "20px", marginBottom: "20px" }}>
+                <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <h2 className="section-header">Important Things to Note:</h2>
                     <ul>
                         <li className="section-li">There is no “commander damage” like in the Commander format.</li>

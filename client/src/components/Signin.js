@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import "./../App.scss"
 import Container from "react-bootstrap/Container";
 import { useNavigate  } from "react-router-dom";
+import "./../App.scss"
 
 async function loginUser(credentials) {
     return fetch('http://localhost:5000/login', {
@@ -42,7 +42,7 @@ export const Signin = ({ setUserData }) => {
 
     return (
         <Container>
-            <Card style={{margin: "15px", padding: "15px", backgroundColor: "#28293d"}}>
+            <Card style={{margin: "15px", padding: "15px", backgroundColor: "#232323"}}>
                 <Form style={{color: "white"}} onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail" onChange={e => setUserName(e.target.value)}>
                         <Form.Label>Username</Form.Label>
@@ -55,7 +55,7 @@ export const Signin = ({ setUserData }) => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
-                    <Button type="submit" variant="primary" style={{backgroundColor: "#5483df", borderWidth: "0px", justifySelf: "right"}}>
+                    <Button variant="standard">
                     Sign in
                     </Button>
                 </Form>

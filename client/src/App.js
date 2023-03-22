@@ -47,15 +47,13 @@ function App() {
             <Nav className='me-auto'>
               <Nav.Link as={Link} to="/Rules">Rules</Nav.Link>
               <Nav.Link as={Link} to="/Banlist">Banlist</Nav.Link>
-              {userToken && <Nav.Link as={Link} to="/Weeklies">Weeklies</Nav.Link>}
-              {userToken && <Nav.Link as={Link} to="/Decks">Decks</Nav.Link>}
             </Nav>
             <Nav>
-              {!user && <Nav.Link as={Link} to="/Signin">
-                <Button style={{backgroundColor: "#5483df", borderWidth: "0px"}}>Sign in</Button>
-              </Nav.Link>}
+              {userToken && <Nav.Link as={Link} to="/Weeklies">Weeklies</Nav.Link>}
+              {userToken && <Nav.Link as={Link} to="/Decks">Decks</Nav.Link>}
+              {!user && <Nav.Link as={Link} to="/Signin">Sign In</Nav.Link>}
               {user && <Nav.Link as={Link} to="/">{userName}</Nav.Link>}
-              {user && <Button style={{backgroundColor: "#5483df", borderWidth: "0px"}} onClick={signOut}>Sign Out</Button>}
+              {user && <Nav.Link onClick={signOut}> Sign Out</Nav.Link>}
             </Nav>
           </Container>
         </Navbar>
