@@ -55,7 +55,7 @@ export const Signin = ({ setUserData }) => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
-                    <Button variant="standard">
+                    <Button type="submit" variant="standard">
                     Sign in
                     </Button>
                 </Form>
