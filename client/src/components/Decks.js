@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import userData from '../util/UserData';
 import Button from 'react-bootstrap/Button';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -36,6 +34,8 @@ async function getDecks(token) {
     .then(data => {
         if(data.status >= 400) {
             throw new Error("Server responds with error!");
+        } else if (data.status == 204) {
+            return [];
         }
         return data.json();
     })
@@ -182,7 +182,7 @@ export const Decks = () => {
             <div class="card-footer-container">
                 <div class="footer-header mtg-font-bold">Decks</div>
                 <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
-                    <Button onClick={createDeck} type="button" variant="standard" style={{textAlign: "ceneter", padding: "2px", marginBottom: "10px"}}>New Deck</Button>
+                    <Button onClick={createDeck} type="button" variant="standard">New Deck</Button>
                     <BootstrapTable rowStyle={{backgroundColor: "white"}} 
                         keyField="id"
                         data={ decks }
