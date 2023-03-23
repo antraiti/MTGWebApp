@@ -1,3 +1,5 @@
+Currently live at http://bbmtg.com/
+
 Project is split into Server and Client.
 
 Currently just using Client. 
