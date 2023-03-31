@@ -62,6 +62,7 @@ export const Banlist = () => {
                         "Mox Pearl#https://cards.scryfall.io/normal/front/e/d/ed0216a0-c5c9-4a99-b869-53e4d0256326.jpg?1614638847", 
                         "Mox Ruby#https://cards.scryfall.io/normal/front/4/5/45fd6e91-df76-497f-b642-33dc3d5f6a5a.jpg?1614638852", 
                         "Mox Sapphire#https://cards.scryfall.io/normal/front/e/a/ea1feac0-d3a7-45eb-9719-1cdaf51ea0b6.jpg?1614638862", 
+                        "Mystic Remora#https://cards.scryfall.io/normal/front/1/3/13a08c07-e8b8-43bf-99e6-d268c79a62bf.jpg?1559592432", 
                         "Panoptic Mirror#https://cards.scryfall.io/normal/front/5/0/50e945b0-e919-41bb-9bc5-f71ad531e8f1.jpg?1562636846", 
                         "Paradox Engine#https://cards.scryfall.io/normal/front/f/d/fd8ccd81-9e11-47fa-8e16-064c52c24506.jpg?1576382376", 
                         "Plateau#https://cards.scryfall.io/normal/front/b/b/bb979a96-a57d-4fb5-8ebe-0bd398272abe.jpg?1562932720", 

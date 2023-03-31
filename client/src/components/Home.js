@@ -12,7 +12,7 @@ export const Home = () => {
             <div class="inner-container full-vh flex-column">
                 <section className="jumbotron text-center">
                     <div className="container">
-                        <h1 className="jumbotron-heading mtg-font-bold">Better Brawl</h1>
+                        <h1 className="jumbotron-heading mtg-font-bold">Rumble</h1>
                         <p className="lead">An alternative multiplayer format.</p>
                     </div>
                 </section>
