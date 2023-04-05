@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
+import CardGroup from "react-bootstrap/CardGroup";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory, { Type }  from 'react-bootstrap-table2-editor';
+import WeeklyCard from './WeeklyCard';
 import './Rules.scss';
 import './../App.scss';
 import userData from '../util/UserData';
@@ -63,37 +63,18 @@ export const Weeklies = () => {
         return () => mounted = false;
       }, [])
 
-    const colHeaderStyle = {backgroundColor: 'white'}
-    const columns = [{
-        dataField: 'name',
-        text: 'Event Name',
-        headerStyle: colHeaderStyle
-    }, {
-        dataField: 'time',
-        text: 'Date',
-        headerStyle: colHeaderStyle
-    }, {
-        dataField: 'themed',
-        text: 'Themed',
-        headerStyle: colHeaderStyle
-    }];
-
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
                 <div className="card-footer-container">
                     <div className="footer-header mtg-font-bold">Weeklies</div>
                     <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
-                        <Button type="button" variant="standard" onClick={createEvent}>New Event</Button>
-                        <BootstrapTable rowStyle={{backgroundColor: "white"}} 
-                            keyField="id"
-                            data={ events }
-                            columns={ columns }
-                            striped hover condensed
-                            cellEdit={ cellEditFactory({
-                                mode: 'dbclick',
-                                afterSaveCell: (oldValue, newValue, row, column) => {  }
-                            })}/>
+                        <Button type="button" variant="standard" onClick={createEvent} style={{ marginBottom: "20px" }}>New Event</Button>
+                        <div style={{background: "transparent"}}>
+                            {events.slice(0).reverse().map((event) => (
+                                <WeeklyCard eventInfo={event}></WeeklyCard>
+                            ))}
+                        </div>
                     </Card>
                 </div>
             </Row>
