@@ -5,6 +5,10 @@
   text-align: left;
 }
 
+.Card {
+  background-color: gold;
+}
+
 .card-footer-container {
   .footer-header {
     font-size: 2.5rem;
@@ -79,4 +83,8 @@
 
 .flex-grow {
   flex: 1 1 100%;
+}
+
+.weekly-card a{
+  text-decoration: none;
 }

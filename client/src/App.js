@@ -18,6 +18,7 @@ import userData from './util/UserData';
 import './App.scss';
 import { Weeklies } from './components/Weeklies';
 import { Decks } from './components/Decks';
+import { WeeklyDetails } from './components/WeeklyDetails';
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
             <Route path="/Rules" element={<Rules/>}/>
             <Route path="/Signin" element={<Signin setUserData={setUserData}/>}/>
             <Route path="/Weeklies" element={<Weeklies/>}/>
+            <Route path="/Weeklies/:id" element={<WeeklyDetails/>}/>
             <Route path="/Decks" element={<Decks/>}/>
           </Routes>
         </div>
