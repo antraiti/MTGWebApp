@@ -5,11 +5,13 @@ import CardHeader from "react-bootstrap/esm/CardHeader";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router-dom";
 import userData from '../util/UserData';
+import Form from 'react-bootstrap/Form';
 import './Rules.scss';
 import './../App.scss';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import MatchCard from "./MatchCard";
+import EditableLable from "./EditableLable";
 
 async function getEventDetails(token, id) {
     return fetch('http://localhost:5000/event/'+id, {
@@ -54,6 +56,9 @@ export const WeeklyDetails = () => {
     const createMatch = () => {
         newMatch(userToken, id);
     }
+    const [eventName, setEventName] = useState([]);
+    const [showInputEle, setShowInputEle] = useState(false);
+
 
     useEffect(() => {
         let mounted = true;
@@ -61,6 +66,7 @@ export const WeeklyDetails = () => {
         .then(item => {
         if(mounted) {
             setEventDetails(item)
+            setEventName(item.event.name)
         }
         })
         return () => mounted = false;
@@ -71,7 +77,13 @@ export const WeeklyDetails = () => {
             <Row style={{ margin: "20px"}}>
                 <Row>
                     <Col>
-                        <h1 style={{color:"white"}}>{eventDetails.event != null && eventDetails.event.name}</h1>
+                        <EditableLable
+                            value={eventName}
+                            handleChange={(e) => setEventName(e.target.value)}  
+                            handleDoubleClick={() => setShowInputEle(true)} 
+                            handleBlur={() => setShowInputEle(false)}         
+                            showInputEle={showInputEle}
+                            />
                     </Col>
                     <Col>
                     </Col>
