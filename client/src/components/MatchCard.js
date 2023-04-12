@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Link
 } from "react-router-dom";
@@ -9,6 +9,9 @@ import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
 import userData from '../util/UserData';
+import MatchPerformanceRow from "./MatchPerformanceRow";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 async function updateMatchTimestamp(token, match, prop) {
@@ -29,19 +32,41 @@ async function updateMatchTimestamp(token, match, prop) {
   })
 }
 
+async function newPerformance(token, user, match) {
+  return fetch('http://localhost:5000/performance', {
+  method: 'POST',
+  headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token
+  },
+  body: JSON.stringify({user: user, match: match})
+  })
+  .then(data => {
+      if(data.status >= 400) {
+          throw new Error(data.message);
+      }
+      return data.json();
+  })
+}
+
 export default function MatchCard(matchObject) {
   const { user, setUserData, userName, userToken, removeUserData } = userData();
-  const matchInfo = matchObject.matchInfo;
+  const matchInfo = matchObject.matchInfo.match;
+  const users = matchObject.userlist;
+  const performances = matchObject.matchInfo.performances;
   
   const timestampMatch = (start) => {
     const ts = require('moment')().format('YYYY-MM-DD HH:mm:ss');
     start ? matchInfo.start = ts : matchInfo.end = ts;
     updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
   }
-
+  const createPerformance = (user) => {
+    newPerformance(userToken, user, matchInfo);
+  }
     return(
-      <div className="match-card">
-        <Card style={{ backgroundColor: "#232323", marginBottom: "20px"}}>
+      <div className="match-card" style={{marginBottom: "40px"}}>
+        <Card style={{ backgroundColor: "#383838", marginBottom: "0px"}}>
           <Card.Body style={{padding:"5px"}}>
           <Row>
             <Col>
@@ -64,6 +89,14 @@ export default function MatchCard(matchObject) {
           </Row>
           </Card.Body>
         </Card>
+        {performances != null && performances.map((performance) => (
+              <MatchPerformanceRow performanceData={performance}/>
+          ))}
+        <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
+          {users != null && users.map((user) => (
+              <Dropdown.Item onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
+          ))}
+        </DropdownButton>
       </div>
     )
   }

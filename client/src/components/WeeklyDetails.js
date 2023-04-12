@@ -49,6 +49,21 @@ async function newMatch(token, matchid) {
     })
 }
 
+async function getUsers(token) {
+    return fetch('http://localhost:5000/user', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }})
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error("Server responds with error!");
+        }
+        return data.json();
+    })
+  }
+
 export const WeeklyDetails = () => {
     const { id } = useParams();
     const { user, setUserData, userName, userToken, removeUserData } = userData();
@@ -58,7 +73,7 @@ export const WeeklyDetails = () => {
     }
     const [eventName, setEventName] = useState([]);
     const [showInputEle, setShowInputEle] = useState(false);
-
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         let mounted = true;
@@ -69,6 +84,12 @@ export const WeeklyDetails = () => {
             setEventName(item.event.name)
         }
         })
+        getUsers(userToken)
+        .then(item => {
+            if(mounted) {
+                setUsers(item)
+            }
+            })
         return () => mounted = false;
       }, [])
 
@@ -103,8 +124,8 @@ export const WeeklyDetails = () => {
                 </Row>
             </Row>
             <Row>
-                {eventDetails.matches != null && eventDetails.matches.map((match) => (
-                    <MatchCard matchInfo={match}></MatchCard>
+                {eventDetails.matches != null && users != null && eventDetails.matches.map((match) => (
+                    <MatchCard matchInfo={match} userlist={users}></MatchCard>
                 ))}
             </Row>
             <Row>
