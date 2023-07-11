@@ -90,7 +90,7 @@ export default function MatchCard(matchObject) {
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow performanceData={performance}/>
+              <MatchPerformanceRow performanceData={performance} playerCount={performances.length}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Link
 } from "react-router-dom";
@@ -9,10 +9,21 @@ import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
 import userData from '../util/UserData';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import {LabelDropdown} from '../util/LabelDropdown';
 
 export default function MacthPerformanceRow(performanceObject) {
 
     const performanceData = performanceObject.performanceData;
+    const playerCount = performanceObject.playerCount;
+
+    const [position, setPosition] = useState([]);
+
+    function setPos(pos){
+      const newpos = pos;
+      setPosition(newpos);
+    }
 
     return(
       <div className="performance-row">
@@ -26,7 +37,12 @@ export default function MacthPerformanceRow(performanceObject) {
                 <h6 style={{color:"white"}}>Deck: {performanceData != null && performanceData.deckname}</h6>
             </Col>
             <Col>
-                <h6 style={{color:"white"}}>Pos: {performanceData != null && performanceData.position}</h6>
+              <div>
+                <LabelDropdown value={"Pos: " + position} 
+                  items={Array.from({length: playerCount}, (x, i) => i)}
+                  selected={setPos}
+                  />
+              </div>
             </Col>
             <Col>
                 <h6 style={{color:"white"}}>Finish: {performanceData != null && performanceData.finish}</h6>
