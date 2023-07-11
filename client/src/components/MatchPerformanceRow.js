@@ -13,16 +13,35 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {LabelDropdown} from '../util/LabelDropdown';
 
-export default function MacthPerformanceRow(performanceObject) {
+async function updatePerformance(token, id, key, val) {
+  return fetch('http://localhost:5000/performance', {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+    },
+    body: JSON.stringify({'id': id, [key]: val})
+    })
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error(data.message);
+        }
+        window.location.reload(false); //refreshes page
+        return data.json();
+    })
+}
 
+export default function MacthPerformanceRow(performanceObject) {
+    const { user, setUserData, userName, userToken, removeUserData } = userData();
     const performanceData = performanceObject.performanceData;
     const playerCount = performanceObject.playerCount;
 
-    const [position, setPosition] = useState([]);
+    const [placement, setPlacement] = useState([performanceData.placement]);
 
-    function setPos(pos){
-      const newpos = pos;
-      setPosition(newpos);
+    function setPlace(place){
+      updatePerformance(userToken, performanceData.id, 'placement', place);
+      setPlacement(place);
     }
 
     return(
@@ -38,9 +57,9 @@ export default function MacthPerformanceRow(performanceObject) {
             </Col>
             <Col>
               <div>
-                <LabelDropdown value={"Pos: " + position} 
-                  items={Array.from({length: playerCount}, (x, i) => i)}
-                  selected={setPos}
+                <LabelDropdown value={"Pos: " + placement} 
+                  items={Array.from({length: playerCount}, (x, i) => i+1)}
+                  selected={setPlace}
                   />
               </div>
             </Col>

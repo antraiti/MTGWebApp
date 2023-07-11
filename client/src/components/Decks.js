@@ -55,6 +55,7 @@ async function newDeck(token) {
         if(data.status >= 400) {
             throw new Error(data.message);
         }
+        window.location.reload(false); //refreshes page
         return data.json();
     })
 }
@@ -73,6 +74,7 @@ async function updateDeck(token, deck) {
         if(data.status >= 400) {
             throw new Error(data.message);
         }
+        window.location.reload(false); //refreshes page
         return data.json();
     })
 }

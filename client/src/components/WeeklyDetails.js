@@ -45,6 +45,7 @@ async function newMatch(token, matchid) {
         if(data.status >= 400) {
             throw new Error(data.message);
         }
+        window.location.reload(false); //refreshes page
         return data.json();
     })
 }

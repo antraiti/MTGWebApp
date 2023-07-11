@@ -28,6 +28,7 @@ async function updateMatchTimestamp(token, match, prop) {
       if(data.status >= 400) {
           throw new Error(data.message);
       }
+      window.location.reload(false); //refreshes page
       return data.json();
   })
 }
@@ -46,6 +47,7 @@ async function newPerformance(token, user, match) {
       if(data.status >= 400) {
           throw new Error(data.message);
       }
+      window.location.reload(false); //refreshes page
       return data.json();
   })
 }
