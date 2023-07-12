@@ -50,17 +50,18 @@ const CustomMenu = React.forwardRef(
   },
 );
 
-export const LabelDropdown = ({value, items, selected}) => {
+export const LabelDropdown = ({value, items, selected, clicked}) => {
     const [title, setTitle] = useState(value);
+    const [iems, setIems] = useState(items);
     
     return(
-        <Dropdown onSelect={selected}>
+        <Dropdown onSelect={selected} onToggle={clicked}>
           <Dropdown.Toggle as={CustomToggle}>
             {title}
           </Dropdown.Toggle>
       
           <Dropdown.Menu as={CustomMenu} style={{color:"white", textDecoration:"none"}}>
-            {items != null && items.map((i) => (
+            {iems != null && iems.map((i) => (
                 <Dropdown.Item eventKey={i}>{i}</Dropdown.Item>
             ))}
           </Dropdown.Menu>

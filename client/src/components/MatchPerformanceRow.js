@@ -13,6 +13,24 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {LabelDropdown} from '../util/LabelDropdown';
 
+async function getDecks(token, userid) {
+  return fetch('http://localhost:5000/deck/'+userid, {
+  method: 'GET',
+  headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token
+  }})
+  .then(data => {
+      if(data.status >= 400) {
+          throw new Error("Server responds with error!");
+      } else if (data.status == 204) {
+          return [];
+      }
+      return data.json();
+  })
+}
+
 async function updatePerformance(token, id, key, val) {
   return fetch('http://localhost:5000/performance', {
     method: 'PUT',
@@ -36,12 +54,30 @@ export default function MacthPerformanceRow(performanceObject) {
     const { user, setUserData, userName, userToken, removeUserData } = userData();
     const performanceData = performanceObject.performanceData;
     const playerCount = performanceObject.playerCount;
+    const users = performanceObject.userlist;
 
     const [placement, setPlacement] = useState([performanceData.placement]);
+    const [position, setPosition] = useState([performanceData.order]);
+    const [deck, setDeck] = useState([performanceData.deck]);
+    const [decklist, setDecklist] = useState([]);
+    const [killedby, setKilledby] = useState([performanceData.killedby]);
 
-    function setPlace(place){
-      updatePerformance(userToken, performanceData.id, 'placement', place);
-      setPlacement(place);
+    function selectedPlace(selectedPlace){
+      updatePerformance(userToken, performanceData.id, 'placement', selectedPlace);
+      setPlacement(selectedPlace);
+    }
+
+    function selectedPosition(selectedPosition){
+      updatePerformance(userToken, performanceData.id, 'order', selectedPosition);
+      setPosition(selectedPosition);
+    }
+
+    function selectedDeck(selectedDeck){
+      updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck);
+    }
+
+    function getDecklist(){
+      setDecklist(getDecks(userToken, performanceData.userid));
     }
 
     return(
@@ -53,21 +89,36 @@ export default function MacthPerformanceRow(performanceObject) {
               <h6 style={{color:"white"}}>{performanceData != null && performanceData.username}</h6>
             </Col>
             <Col>
-                <h6 style={{color:"white"}}>Deck: {performanceData != null && performanceData.deckname}</h6>
-            </Col>
-            <Col>
               <div>
-                <LabelDropdown value={"Pos: " + placement} 
-                  items={Array.from({length: playerCount}, (x, i) => i+1)}
-                  selected={setPlace}
+                <LabelDropdown value={"Select Deck"} 
+                  clicked={getDecklist}
+                  selected={selectedDeck}
                   />
               </div>
             </Col>
             <Col>
-                <h6 style={{color:"white"}}>Finish: {performanceData != null && performanceData.finish}</h6>
+              <div>
+                <LabelDropdown value={"Finished: " + placement} 
+                  items={Array.from({length: playerCount}, (x, i) => i+1)}
+                  selected={selectedPlace}
+                  />
+              </div>
             </Col>
             <Col>
-                <h6 style={{color:"white"}}>Killed By: {performanceData != null && performanceData.killedby}</h6>
+              <div>
+                <LabelDropdown value={"Order: " + position} 
+                  items={Array.from({length: playerCount}, (x, i) => i+1)}
+                  selected={selectedPosition}
+                  />
+              </div>
+            </Col>
+            <Col>
+              <div>
+                <LabelDropdown value={"Killed By: " + killedby}
+                  items={users.map((user) => user.userName)}
+                  selected={selectedPlace}
+                  />
+              </div>
             </Col>
             <Col>
                 <h6 style={{color:"red", textAlign:"end"}}>X</h6>
