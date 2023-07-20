@@ -75,6 +75,7 @@ export const WeeklyDetails = () => {
     const [eventName, setEventName] = useState([]);
     const [showInputEle, setShowInputEle] = useState(false);
     const [users, setUsers] = useState([]);
+    const [decks, setDecks] = useState([]);
 
     useEffect(() => {
         let mounted = true;
@@ -83,6 +84,7 @@ export const WeeklyDetails = () => {
         if(mounted) {
             setEventDetails(item)
             setEventName(item.event.name)
+            setDecks(item.decks)
         }
         })
         getUsers(userToken)
@@ -126,7 +128,7 @@ export const WeeklyDetails = () => {
             </Row>
             <Row>
                 {eventDetails.matches != null && users != null && eventDetails.matches.map((match) => (
-                    <MatchCard matchInfo={match} userlist={users}></MatchCard>
+                    <MatchCard matchInfo={match} userlist={users} decklist={decks}></MatchCard>
                 ))}
             </Row>
             <Row>

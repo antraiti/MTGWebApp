@@ -12,6 +12,7 @@ import userData from '../util/UserData';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {LabelDropdown} from '../util/LabelDropdown';
+import {DynamicLabelDropdown} from '../util/DynamicLabelDropdown';
 
 async function getDecks(token, userid) {
   return fetch('http://localhost:5000/deck/'+userid, {
@@ -58,8 +59,7 @@ export default function MacthPerformanceRow(performanceObject) {
 
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
-    const [deck, setDeck] = useState([performanceData.deck]);
-    const [decklist, setDecklist] = useState([]);
+    const [deckid, setDeckid] = useState([performanceData.deckid]);
     const [killedby, setKilledby] = useState([performanceData.killedby]);
 
     function selectedPlace(selectedPlace){
@@ -75,9 +75,18 @@ export default function MacthPerformanceRow(performanceObject) {
     function selectedDeck(selectedDeck){
       updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck);
     }
+    function selectedKilledBy(selectedKilledBy){
+      updatePerformance(userToken, performanceData.id, 'killedby', selectedKilledBy);
+    }
 
-    function getDecklist(){
-      setDecklist(getDecks(userToken, performanceData.userid));
+    function getDeckDisplayName() {
+      if(performanceData.deckid == null || deckid == undefined || deckid.length <= 0 || deckid < 0) {return "Select Deck"}
+      return performanceObject.decks.find((deck) => deck.id == deckid)?.name;
+    }
+
+    function getKilledByDisplayName() {
+      if(performanceData.killedbyname == null || performanceData.killedbyname.length <= 0) {return "Killed By"}
+      return performanceData.killedbyname;
     }
 
     return(
@@ -90,8 +99,8 @@ export default function MacthPerformanceRow(performanceObject) {
             </Col>
             <Col>
               <div>
-                <LabelDropdown value={"Select Deck"} 
-                  clicked={getDecklist}
+                <DynamicLabelDropdown value={getDeckDisplayName()} 
+                  items={performanceObject.decks.map((deck) => ({d: deck.name, v: deck.id}))}
                   selected={selectedDeck}
                   />
               </div>
@@ -114,9 +123,9 @@ export default function MacthPerformanceRow(performanceObject) {
             </Col>
             <Col>
               <div>
-                <LabelDropdown value={"Killed By: " + killedby}
-                  items={users.map((user) => user.userName)}
-                  selected={selectedPlace}
+              <DynamicLabelDropdown value={getKilledByDisplayName()} 
+                  items={performanceObject.userlist.map((user) => ({d: user.username, v: user.publicid}))}
+                  selected={selectedKilledBy}
                   />
               </div>
             </Col>

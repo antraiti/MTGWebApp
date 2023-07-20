@@ -50,7 +50,7 @@ const CustomMenu = React.forwardRef(
   },
 );
 
-export const LabelDropdown = ({value, items, selected}) => {
+export const DynamicLabelDropdown = ({value, items, selected}) => {
     const [title, setTitle] = useState(value);
     
     return(
@@ -61,7 +61,7 @@ export const LabelDropdown = ({value, items, selected}) => {
       
           <Dropdown.Menu as={CustomMenu} style={{color:"white", textDecoration:"none"}}>
             {items != null && items.map((i) => (
-                <Dropdown.Item eventKey={i}>{i}</Dropdown.Item>
+                <Dropdown.Item eventKey={i.v}>{i.d}</Dropdown.Item>
             ))}
           </Dropdown.Menu>
         </Dropdown>

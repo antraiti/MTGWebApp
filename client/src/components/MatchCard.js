@@ -56,6 +56,7 @@ export default function MatchCard(matchObject) {
   const { user, setUserData, userName, userToken, removeUserData } = userData();
   const matchInfo = matchObject.matchInfo.match;
   const users = matchObject.userlist;
+  const decks = matchObject.decklist;
   const performances = matchObject.matchInfo.performances;
   
   const timestampMatch = (start) => {
@@ -92,7 +93,7 @@ export default function MatchCard(matchObject) {
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users}/>
+              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} decks={decks.filter(deck => deck.userid === performance.userid)}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
