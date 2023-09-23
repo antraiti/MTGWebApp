@@ -12,10 +12,11 @@ import userData from '../util/UserData';
 import MatchPerformanceRow from "./MatchPerformanceRow";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import configData from "./../config.json";
 
 
 async function updateMatchTimestamp(token, match, prop) {
-  return fetch('http://localhost:5000/match', {
+  return fetch(configData.API_URL+'/match', {
   method: 'PUT',
   headers: {
       'Accept': 'application/json',
@@ -34,7 +35,7 @@ async function updateMatchTimestamp(token, match, prop) {
 }
 
 async function newPerformance(token, user, match) {
-  return fetch('http://localhost:5000/performance', {
+  return fetch(configData.API_URL+'/performance', {
   method: 'POST',
   headers: {
       'Accept': 'application/json',

@@ -12,9 +12,10 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import MatchCard from "./MatchCard";
 import EditableLable from "./EditableLable";
+import configData from "./../config.json";
 
 async function getEventDetails(token, id) {
-    return fetch('http://localhost:5000/event/'+id, {
+    return fetch(configData.API_URL+'/event/'+id, {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -32,7 +33,7 @@ async function getEventDetails(token, id) {
 }
 
 async function newMatch(token, matchid) {
-    return fetch('http://localhost:5000/match', {
+    return fetch(configData.API_URL+'/match', {
     method: 'POST',
     headers: {
         'Accept': 'application/json',
@@ -51,7 +52,7 @@ async function newMatch(token, matchid) {
 }
 
 async function getUsers(token) {
-    return fetch('http://localhost:5000/user', {
+    return fetch(configData.API_URL+'/user', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',

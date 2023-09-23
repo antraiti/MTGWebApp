@@ -6,6 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  /*background: url(https://i.imgur.com/c14I3vy.png);*/
+  background-image: linear-gradient(to bottom, transparent 0%,#0f0f0f 50%), url("https://i.imgur.com/c14I3vy.png");
+  background-blend-mode: overlay;
+  background-color: #0f0f0f;
+  background-attachment: fixed;
 }
 
 code {

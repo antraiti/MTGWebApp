@@ -5,9 +5,11 @@ import Card from 'react-bootstrap/Card';
 import Container from "react-bootstrap/Container";
 import { useNavigate  } from "react-router-dom";
 import "./../App.scss"
+import configData from "./../config.json"
+
 
 async function loginUser(credentials) {
-    return fetch('http://localhost:5000/login', {
+    return fetch(configData.API_URL+'/login', {
     method: 'POST',
     headers: {
         'Accept': 'application/json',
@@ -48,7 +50,7 @@ export const Signin = ({ setUserData }) => {
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="username" placeholder="Enter username" />
                         <Form.Text className="text-muted">
-                        Currently no signups. Accounts are internal use only.
+                        No signups. Accounts are private internal use only.
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword" onChange={e => setPassword(e.target.value)}>

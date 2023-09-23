@@ -8,9 +8,10 @@ import './Rules.scss';
 import './../App.scss';
 import userData from '../util/UserData';
 import Button from "react-bootstrap/esm/Button";
+import configData from "./../config.json";
 
 async function getEvents(token) {
-    return fetch('http://localhost:5000/event', {
+    return fetch(configData.API_URL+'/event', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -28,7 +29,7 @@ async function getEvents(token) {
 }
 
 async function newEvent(token) {
-    return fetch('http://localhost:5000/event', {
+    return fetch(configData.API_URL+'/event', {
     method: 'POST',
     headers: {
         'Accept': 'application/json',

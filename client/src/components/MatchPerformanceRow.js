@@ -13,9 +13,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {LabelDropdown} from '../util/LabelDropdown';
 import {DynamicLabelDropdown} from '../util/DynamicLabelDropdown';
+import configData from "./../config.json";
 
 async function getDecks(token, userid) {
-  return fetch('http://localhost:5000/deck/'+userid, {
+  return fetch(configData.API_URL+'/deck/'+userid, {
   method: 'GET',
   headers: {
       'Accept': 'application/json',
@@ -33,7 +34,7 @@ async function getDecks(token, userid) {
 }
 
 async function updatePerformance(token, id, key, val) {
-  return fetch('http://localhost:5000/performance', {
+  return fetch(configData.API_URL+'/performance', {
     method: 'PUT',
     headers: {
         'Accept': 'application/json',
@@ -100,7 +101,7 @@ export default function MacthPerformanceRow(performanceObject) {
             <Col>
               <div>
                 <DynamicLabelDropdown value={getDeckDisplayName()} 
-                  items={performanceObject.decks.map((deck) => ({d: deck.name, v: deck.id}))}
+                  items={performanceObject.decks.map((deck) => ({d: (new Date(Date.parse(deck.lastupdated)).toLocaleDateString("en-US") + ' ' + deck.name), v: deck.id})).reverse()}
                   selected={selectedDeck}
                   />
               </div>

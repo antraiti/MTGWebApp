@@ -19,6 +19,9 @@ import './App.scss';
 import { Weeklies } from './components/Weeklies';
 import { Decks } from './components/Decks';
 import { WeeklyDetails } from './components/WeeklyDetails';
+import { DeckCheck } from './components/DeckCheck';
+import { DeckForm } from './components/DeckForm';
+import { DeckEditor } from './components/DeckEditor';
 
 
 function App() {
@@ -48,6 +51,7 @@ function App() {
             <Nav className='me-auto'>
               <Nav.Link as={Link} to="/Rules">Rules</Nav.Link>
               <Nav.Link as={Link} to="/Banlist">Banlist</Nav.Link>
+              <Nav.Link as={Link} to="/DeckCheck">Deck Check</Nav.Link>
             </Nav>
             <Nav>
               {userToken && <Nav.Link as={Link} to="/Weeklies">Weeklies</Nav.Link>}
@@ -63,10 +67,13 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/Banlist" element={<Banlist/>}/>
             <Route path="/Rules" element={<Rules/>}/>
+            <Route path="/DeckCheck" element={<DeckCheck/>}/>
             <Route path="/Signin" element={<Signin setUserData={setUserData}/>}/>
             <Route path="/Weeklies" element={<Weeklies/>}/>
             <Route path="/Weeklies/:id" element={<WeeklyDetails/>}/>
             <Route path="/Decks" element={<Decks/>}/>
+            <Route path="/DeckForm" element={<DeckForm/>}/>
+            <Route path="/DeckForm/:id" element={<DeckEditor/>}/>
           </Routes>
         </div>
       </div>

@@ -32,7 +32,7 @@ export const Home = () => {
                 <div class="card-footer-container">
                     <div class="footer-header mtg-font-bold">Quick Ruleset</div>
                     <CardGroup>
-                        <Card style={{ backgroundColor: "#232323", margin: "10px" }}>
+                        <Card style={{margin: "10px" }}>
                             <Card.Header><h1 className="infocard-h mtg-font">60</h1></Card.Header>
                             <Card.Text><span class="mtg-font">Card singleton decks</span></Card.Text>
                         </Card>
