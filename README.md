@@ -1,4 +1,4 @@
-Currently live at http://bbmtg.com/
+Currently live at http://rumblemtg.com/
 
 Project is split into Server and Client.
 
