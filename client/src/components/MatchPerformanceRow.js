@@ -57,6 +57,7 @@ export default function MacthPerformanceRow(performanceObject) {
     const performanceData = performanceObject.performanceData;
     const playerCount = performanceObject.playerCount;
     const users = performanceObject.userlist;
+    const starttime = performanceObject.starttime;
 
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
@@ -71,6 +72,10 @@ export default function MacthPerformanceRow(performanceObject) {
     function selectedPosition(selectedPosition){
       updatePerformance(userToken, performanceData.id, 'order', selectedPosition);
       setPosition(selectedPosition);
+    }
+
+    function deletePerformance(){
+      updatePerformance(userToken, performanceData.id, 'delete', 'delete');
     }
 
     function selectedDeck(selectedDeck){
@@ -130,9 +135,10 @@ export default function MacthPerformanceRow(performanceObject) {
                   />
               </div>
             </Col>
+            {starttime == null &&
             <Col>
-                <h6 style={{color:"red", textAlign:"end"}}>X</h6>
-            </Col>
+                <Button onClick={deletePerformance} variant="danger" style={{float:"right"}}>X</Button>
+            </Col>}
           </Row>
           </Card.Body>
         </Card>

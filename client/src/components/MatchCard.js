@@ -65,6 +65,9 @@ export default function MatchCard(matchObject) {
     start ? matchInfo.start = ts : matchInfo.end = ts;
     updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
   }
+  const deleteMatch = () => {
+    updateMatchTimestamp(userToken, matchInfo, "delete");
+  }
   const createPerformance = (user) => {
     newPerformance(userToken, user, matchInfo);
   }
@@ -90,11 +93,14 @@ export default function MatchCard(matchObject) {
               (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
             : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
             </Col>
+            <Col>
+              {matchInfo.start == null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
+            </Col>
           </Row>
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} decks={decks.filter(deck => deck.userid === performance.userid)}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
