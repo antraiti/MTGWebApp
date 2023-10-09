@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
+import './MatchPerformanceRow.scss';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
@@ -58,6 +59,7 @@ export default function MacthPerformanceRow(performanceObject) {
     const playerCount = performanceObject.playerCount;
     const users = performanceObject.userlist;
     const starttime = performanceObject.starttime;
+    const deckCommanderId = performanceObject.deckcommander;
 
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
@@ -95,13 +97,37 @@ export default function MacthPerformanceRow(performanceObject) {
       return performanceData.killedbyname;
     }
 
+    /**
+     * Takes the given commanderId and generated the scryfall art url for the commander
+     * @returns string
+     */
+    function getCommanderImageUrl() {
+      // Example: https://cards.scryfall.io/art_crop/front/c/e/ce4c6535-afea-4704-b35c-badeb04c4f4c.jpg
+      
+      const url = 'https://cards.scryfall.io/art_crop/front';
+      url += '/' + commanderId.subString(0, 1);
+      url += '/' + commanderId.subString(1, 1) + '/';
+      url += commanderId + '.jpg';
+
+      return url;      
+    }
+
+    const performanceRowStyle = {
+      '--commander-image-url': `url(${getCommanderImageUrl()})`
+    }
+
     return(
-      <div className="performance-row">
-        <Card style={{ backgroundColor: "#232323", marginLeft: "20px", marginRight: "00px"}}>
-          <Card.Body style={{padding:"2px"}}>
-          <Row className="align-items-center">
+      <div className="performance-row" style={performanceRowStyle}>
+        <Card>
+          <Card.Body style={{padding:"2px"}} className={selectedPosition === 1 ? 'winner' : ''}>
+          <Row className="align-items-center row-content">
             <Col>
-              <h6 style={{color:"white"}}>{performanceData != null && performanceData.username}</h6>
+              <h6 
+                style={{color:"white"}}
+                className={selectedPosition === 1 ? 'bold' : ''}
+              >
+                {performanceData != null && (selectedPosition === 1 ? '🏆 ' + performanceData.username : performanceData.username)}
+              </h6>
             </Col>
             <Col>
               <div>

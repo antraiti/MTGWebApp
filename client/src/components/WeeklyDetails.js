@@ -8,6 +8,7 @@ import userData from '../util/UserData';
 import Form from 'react-bootstrap/Form';
 import './Rules.scss';
 import './../App.scss';
+import './WeeklyDetails.scss';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import MatchCard from "./MatchCard";
@@ -133,7 +134,7 @@ export const WeeklyDetails = () => {
                 ))}
             </Row>
             <Row>
-                <label onClick={createMatch} style={{ marginBottom: "20px", color: "gold", textAlign:"center", cursor: "pointer"}}>Add Match</label>
+                <button onClick={createMatch} className="add-match-button">+ Add Match</button>
             </Row>
         </Container>
     )

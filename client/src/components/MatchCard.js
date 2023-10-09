@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
+import './MatchCard.scss';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
@@ -72,37 +73,45 @@ export default function MatchCard(matchObject) {
     newPerformance(userToken, user, matchInfo);
   }
     return(
-      <div className="match-card" style={{marginBottom: "40px"}}>
-        <Card style={{ backgroundColor: "#383838", marginBottom: "0px"}}>
+      <div className="match-card">
+        <Card>
           <Card.Body style={{padding:"5px"}}>
-          <Row>
-            <Col>
-              <h5 as="h5" style={{color:"white"}}>{matchInfo.name}</h5>
-            </Col>
-            <Col>
-              {matchInfo.start != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.start}</h6></span>)
-              : 
-              (<h6 onClick={() => timestampMatch(true)} style={{color:"lime", cursor:"pointer"}}>Start Match</h6>)}
-            </Col>
-            <Col>
-              {matchInfo.start != null ?
-              matchInfo.end != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.end}</h6></span>)
-              : 
-              (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
-            : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
-            </Col>
-            <Col>
-              {matchInfo.start == null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
-            </Col>
-          </Row>
+            <Row className="match-information" >
+              <Col>
+                <h5 style={{color:"white"}}>{matchInfo.name}</h5>
+              </Col>
+              <Col>
+                {matchInfo.start != null ? 
+                (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.start}</h6></span>)
+                : 
+                (<h6 onClick={() => timestampMatch(true)} style={{color:"lime", cursor:"pointer"}}>Start Match</h6>)}
+              </Col>
+              <Col>
+                {matchInfo.start != null ?
+                matchInfo.end != null ? 
+                (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.end}</h6></span>)
+                : 
+                (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
+              : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
+              </Col>
+              <Col>
+                {matchInfo.start == null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
+        <div className="flex-row flex-align-center table-headers">
+          <div>Player Name</div>
+          <div>Deck Name</div>
+          <div>Placement</div>
+          <div>Turn Order</div>
+          <div>Killed By</div>
+        </div>
+
         {performances != null && performances.map((performance) => (
               <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} decks={decks.filter(deck => deck.userid === performance.userid)}/>
           ))}
-        <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
+        <DropdownButton className="add-new-player-button" size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
               <Dropdown.Item onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
           ))}

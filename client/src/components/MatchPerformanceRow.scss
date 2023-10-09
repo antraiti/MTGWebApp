@@ -1,0 +1,26 @@
+@import '../variables';
+
+
+.performance-row {
+  background: linear-gradient(90deg, #00000090 0%, #1D1E1C 40%), url(--commander-image-url);
+  background-color: $app-color-dark;
+
+  .card {
+    background: $app-color-dark;    
+
+    .card-body {          
+      background: linear-gradient(90deg, #00000090 0%, #1D1E1C 40%), url(var(--commander-image-url));      
+      outline: $app-color-light 1px solid;
+      padding: 2px;
+      background-repeat: no-repeat;
+
+      &.winner {
+        outline: gold 1px solid;
+      }
+
+      .row-content {
+        padding: 10px 10px 10px 24px;
+      }
+    }
+  }
+}
