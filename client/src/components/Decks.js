@@ -46,15 +46,38 @@ async function getDecks(token) {
     })
 }
 
+async function sendDeleteDeckRequest(token, id) {
+    return fetch(configData.API_URL+'/removedeck/'+id, {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+    }})
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error("Server responds with error!");
+        } else if (data.status === 204) {
+            return [];
+        }
+        return data.json();
+    })
+}
+
 //Change name once replacing old decks page
 export const Decks = () => {
     const { user, setUserData, userName, userToken, removeUserData } = userData();
     const [decks, setDecks] = useState([]);
+    const [performances, setPerformances] = useState([]);
     const [colors, setColors] = useState([]);
     let navigate = useNavigate(); 
     const createDeck = () => {
         let path = `DeckForm/`; 
         navigate(path);
+    }
+
+    const deleteDeck = (id) => {
+        sendDeleteDeckRequest(userToken, id)
     }
 
     useEffect(() => {
@@ -69,7 +92,8 @@ export const Decks = () => {
         .then(items => {
         if(mounted) {
             console.log(items)
-            setDecks(items)
+            setDecks(items.deckandcards)
+            setPerformances(items.performances)
         }
         })
         return () => mounted = false;
@@ -115,7 +139,10 @@ export const Decks = () => {
                         <div style={{background: "transparent"}}>
                             {decks.slice(0).reverse().map((deck) => (
                                 <DeckCard deckInfo={deck[0]} commanderInfo={deck[1]}
-                                partnerInfo={deck[2]} companionInfo={deck[3]} colorInfo={colors.find((c) => c.id == deck[0].identityid)}></DeckCard>
+                                partnerInfo={deck[2]} companionInfo={deck[3]} 
+                                colorInfo={colors.find((c) => c.id == deck[0].identityid)}
+                                performanceInfo={performances.find((p) => p.deckid == deck[0].id)}
+                                deleteFunction={deleteDeck}></DeckCard>
                             ))}
                         </div>
                     </Card>

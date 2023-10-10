@@ -95,3 +95,10 @@
 .weekly-card a{
   text-decoration: none;
 }
+
+.deck-card {
+  &:hover {
+    box-shadow: 0px 0px 5px 5px #4b4b4b7b;
+    z-index: 1;
+  }
+}
