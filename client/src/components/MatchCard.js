@@ -81,8 +81,14 @@ export default function MatchCard(matchObject) {
   
   const timestampMatch = (start) => {
     const ts = require('moment')().utc().format('YYYY-MM-DD HH:mm:ss');
-    start ? matchInfo.start = ts : matchInfo.end = ts;
-    updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
+    if (start) {
+      updatePerformance(userToken, performances[Math.floor(Math.random() * performances.length)].id, 'order', 1);
+      matchInfo.start = ts;
+      updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
+    } else {
+      matchInfo.end = ts;
+      updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
+    }
   }
   const deleteMatch = () => {
     updateMatchTimestamp(userToken, matchInfo, "delete");
@@ -119,7 +125,7 @@ export default function MatchCard(matchObject) {
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
