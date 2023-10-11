@@ -34,6 +34,25 @@ async function updateMatchTimestamp(token, match, prop) {
   })
 }
 
+async function updatePerformance(token, id, key, val) {
+  return fetch(configData.API_URL+'/performance', {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+    },
+    body: JSON.stringify({'id': id, [key]: val})
+    })
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error(data.message);
+        }
+        window.location.reload(false); //refreshes page
+        return data.json();
+    })
+}
+
 async function newPerformance(token, user, match) {
   return fetch(configData.API_URL+'/performance', {
   method: 'POST',
@@ -61,7 +80,7 @@ export default function MatchCard(matchObject) {
   const performances = matchObject.matchInfo.performances;
   
   const timestampMatch = (start) => {
-    const ts = require('moment')().format('YYYY-MM-DD HH:mm:ss');
+    const ts = require('moment')().utc().format('YYYY-MM-DD HH:mm:ss');
     start ? matchInfo.start = ts : matchInfo.end = ts;
     updateMatchTimestamp(userToken, matchInfo, start ? "start" : "end");
   }

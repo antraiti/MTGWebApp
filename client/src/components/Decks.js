@@ -77,7 +77,9 @@ export const Decks = () => {
     }
 
     const deleteDeck = (id) => {
-        sendDeleteDeckRequest(userToken, id)
+        sendDeleteDeckRequest(userToken, id).then(()=>{
+            window.location.reload(false); //still shouldnt be full reloading, needs to switch to just removing element
+        })
     }
 
     useEffect(() => {
