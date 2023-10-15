@@ -13,6 +13,7 @@ import MatchPerformanceRow from "./MatchPerformanceRow";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import configData from "./../config.json";
+import LocalTime from "./../util/TimeHelpers"
 
 
 async function updateMatchTimestamp(token, match, prop) {
@@ -106,14 +107,14 @@ export default function MatchCard(matchObject) {
             </Col>
             <Col>
               {matchInfo.start != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.start}</h6></span>)
+              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.start)}</h6></span>)
               : 
               (<h6 onClick={() => timestampMatch(true)} style={{color:"lime", cursor:"pointer"}}>Start Match</h6>)}
             </Col>
             <Col>
               {matchInfo.start != null ?
               matchInfo.end != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{matchInfo.end}</h6></span>)
+              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.end)}</h6></span>)
               : 
               (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
             : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}

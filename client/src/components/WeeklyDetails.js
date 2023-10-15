@@ -13,6 +13,7 @@ import Col from "react-bootstrap/esm/Col";
 import MatchCard from "./MatchCard";
 import EditableLable from "./EditableLable";
 import configData from "./../config.json";
+import { LocalDate } from "../util/TimeHelpers";
 
 async function getEventDetails(token, id) {
     return fetch(configData.API_URL+'/event/'+id, {
@@ -115,7 +116,7 @@ export const WeeklyDetails = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <h5 style={{color:"grey"}}>{eventDetails.event != null && eventDetails.event.time}</h5>
+                        <h5 style={{color:"grey"}}>{eventDetails.event != null && LocalDate(eventDetails.event.time)}</h5>
                     </Col>
                     <Col>
                         <h5 style={{color:"grey", textAlign:"end"}}>{eventDetails.event != null && eventDetails.event.themed ? "Themed" : "No Theme"}</h5>

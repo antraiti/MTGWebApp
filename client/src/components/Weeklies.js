@@ -74,7 +74,7 @@ export const Weeklies = () => {
                         <Button type="button" variant="standard" onClick={createEvent} style={{ marginBottom: "20px" }}>New Event</Button>
                         <div style={{background: "transparent"}}>
                             {events.slice(0).reverse().map((event) => (
-                                <WeeklyCard eventInfo={event}></WeeklyCard>
+                                <WeeklyCard key={event.id} eventInfo={event}></WeeklyCard>
                             ))}
                         </div>
                     </Card>

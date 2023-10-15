@@ -93,7 +93,6 @@ export const Decks = () => {
         getDecks(userToken)
         .then(items => {
         if(mounted) {
-            console.log(items)
             setDecks(items.deckandcards)
             setPerformances(items.performances)
         }
@@ -140,10 +139,10 @@ export const Decks = () => {
                     <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                         <div style={{background: "transparent"}}>
                             {decks.slice(0).reverse().map((deck) => (
-                                <DeckCard deckInfo={deck[0]} commanderInfo={deck[1]}
+                                <DeckCard key={deck[0].id} deckInfo={deck[0]} commanderInfo={deck[1]}
                                 partnerInfo={deck[2]} companionInfo={deck[3]} 
                                 colorInfo={colors.find((c) => c.id == deck[0].identityid)}
-                                performanceInfo={performances.find((p) => p.deckid == deck[0].id)}
+                                performanceInfo={performances.filter((p) => p.deckid == deck[0].id)}
                                 deleteFunction={deleteDeck}></DeckCard>
                             ))}
                         </div>

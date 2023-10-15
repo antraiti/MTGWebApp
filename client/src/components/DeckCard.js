@@ -10,6 +10,7 @@ import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
+import { LocalDateTime } from "../util/TimeHelpers";
 
 
 export default function DeckCard(deckObject) {
@@ -30,23 +31,23 @@ export default function DeckCard(deckObject) {
                   <Stack direction="horizontal">
                       {deckInfo.name}
                       <Stack direction="horizontal" style={{padding:"0px 10px 0px 10px"}}>
-                          {colorInfo && colorInfo.id == 1 && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="silver" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.id == 1 && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="silver" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
-                          {colorInfo && colorInfo.white && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f9f8db" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.white && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f9f8db" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
-                          {colorInfo && colorInfo.blue && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bcdaec" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.blue && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bcdaec" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
-                          {colorInfo && colorInfo.black && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#8f8985" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.black && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#8f8985" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
-                          {colorInfo && colorInfo.red && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f8a076" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.red && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f8a076" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
-                          {colorInfo && colorInfo.green && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9cc597" class="bi bi-file-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                          {colorInfo && colorInfo.green && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9cc597" className="bi bi-file-fill" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                           </svg>}
                       </Stack>
                       {deckCommander && <label style={{color:"white"}}>{deckCommander.name}</label>}
@@ -55,8 +56,9 @@ export default function DeckCard(deckObject) {
                   </Stack>
               </CardHeader>
               <Stack direction="horizontal">
-                  <Card.Body style={{color:"white"}}>last updated: {deckInfo.lastupdated}</Card.Body>
-                  <Card.Body style={{color:"white"}}>last used: {deckInfo.lastused}</Card.Body>
+                  <Card.Body style={{color:"white"}}>Games Played: {performanceInfo.length}</Card.Body>
+                  <Card.Body style={{color:"white"}}>Last Updated: {LocalDateTime(deckInfo.lastupdated)}</Card.Body>
+                  <Card.Body style={{color:"white"}}>Last Used: {deckInfo.lastused && LocalDateTime(deckInfo.lastused)}</Card.Body>
               </Stack>
             </Card>
           </Link>
