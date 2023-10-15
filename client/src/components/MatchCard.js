@@ -122,7 +122,7 @@ export default function MatchCard(matchObject) {
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+              <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid && deck.islegal)}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
