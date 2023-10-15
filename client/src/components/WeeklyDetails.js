@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router-dom";
 import userData from '../util/UserData';
-import Form from 'react-bootstrap/Form';
 import './Rules.scss';
 import './../App.scss';
 import Row from "react-bootstrap/esm/Row";
@@ -69,7 +65,7 @@ async function getUsers(token) {
 
 export const WeeklyDetails = () => {
     const { id } = useParams();
-    const { user, setUserData, userName, userToken, removeUserData } = userData();
+    const { userToken } = userData();
     const [eventDetails, setEventDetails] = useState([]);
     const createMatch = () => {
         newMatch(userToken, id);
@@ -130,7 +126,7 @@ export const WeeklyDetails = () => {
             </Row>
             <Row>
                 {eventDetails.matches != null && users != null && eventDetails.matches.map((match) => (
-                    <MatchCard matchInfo={match} userlist={users} decklist={decks}></MatchCard>
+                    <MatchCard key={match.match.id} matchInfo={match} userlist={users} decklist={decks}></MatchCard>
                 ))}
             </Row>
             <Row>

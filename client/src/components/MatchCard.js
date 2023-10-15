@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import {
-  Link
-} from "react-router-dom";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
@@ -74,7 +70,7 @@ async function newPerformance(token, user, match) {
 }
 
 export default function MatchCard(matchObject) {
-  const { user, setUserData, userName, userToken, removeUserData } = userData();
+  const { userToken } = userData();
   const matchInfo = matchObject.matchInfo.match;
   const users = matchObject.userlist;
   const decks = matchObject.decklist;
@@ -126,11 +122,11 @@ export default function MatchCard(matchObject) {
           </Card.Body>
         </Card>
         {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+              <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
           ))}
         <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
           {users != null && users.map((user) => (
-              <Dropdown.Item onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
+              <Dropdown.Item key={user.publicid} onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
           ))}
         </DropdownButton>
       </div>

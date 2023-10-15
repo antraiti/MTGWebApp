@@ -61,7 +61,7 @@ export const LabelDropdown = ({value, items, selected}) => {
       
           <Dropdown.Menu as={CustomMenu} style={{color:"white", textDecoration:"none"}}>
             {items != null && items.map((i) => (
-                <Dropdown.Item eventKey={i}>{i}</Dropdown.Item>
+                <Dropdown.Item key={i} eventKey={i}>{i}</Dropdown.Item>
             ))}
           </Dropdown.Menu>
         </Dropdown>

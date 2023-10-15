@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
-import CardGroup from "react-bootstrap/CardGroup";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import WeeklyCard from './WeeklyCard';
@@ -48,7 +47,7 @@ async function newEvent(token) {
 }
 
 export const Weeklies = () => {
-    const { user, setUserData, userName, userToken, removeUserData } = userData();
+    const { userToken } = userData();
     const [events, setEvents] = useState([]);
     const createEvent = () => {
         newEvent(userToken);

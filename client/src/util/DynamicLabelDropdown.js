@@ -61,7 +61,7 @@ export const DynamicLabelDropdown = ({value, items, selected}) => {
       
           <Dropdown.Menu as={CustomMenu} style={{color:"white", textDecoration:"none"}}>
             {items != null && items.map((i) => (
-                <Dropdown.Item eventKey={i.v}>{i.d}</Dropdown.Item>
+                <Dropdown.Item key={i.v} eventKey={i.v}>{i.d}</Dropdown.Item>
             ))}
           </Dropdown.Menu>
         </Dropdown>
