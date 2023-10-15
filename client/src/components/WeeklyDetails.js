@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router-dom";
 import userData from '../util/UserData';
-import Form from 'react-bootstrap/Form';
 import './Rules.scss';
 import './../App.scss';
 import './WeeklyDetails.scss';
@@ -14,6 +10,7 @@ import Col from "react-bootstrap/esm/Col";
 import MatchCard from "./MatchCard";
 import EditableLable from "./EditableLable";
 import configData from "./../config.json";
+import { LocalDate } from "../util/TimeHelpers";
 
 async function getEventDetails(token, id) {
     return fetch(configData.API_URL+'/event/'+id, {
@@ -69,7 +66,7 @@ async function getUsers(token) {
 
 export const WeeklyDetails = () => {
     const { id } = useParams();
-    const { user, setUserData, userName, userToken, removeUserData } = userData();
+    const { userToken } = userData();
     const [eventDetails, setEventDetails] = useState([]);
     const createMatch = () => {
         newMatch(userToken, id);
@@ -116,7 +113,7 @@ export const WeeklyDetails = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <h5 style={{color:"grey"}}>{eventDetails.event != null && eventDetails.event.time}</h5>
+                        <h5 style={{color:"grey"}}>{eventDetails.event != null && LocalDate(eventDetails.event.time)}</h5>
                     </Col>
                     <Col>
                         <h5 style={{color:"grey", textAlign:"end"}}>{eventDetails.event != null && eventDetails.event.themed ? "Themed" : "No Theme"}</h5>
@@ -130,7 +127,7 @@ export const WeeklyDetails = () => {
             </Row>
             <Row>
                 {eventDetails.matches != null && users != null && eventDetails.matches.map((match) => (
-                    <MatchCard matchInfo={match} userlist={users} decklist={decks}></MatchCard>
+                    <MatchCard key={match.match.id} matchInfo={match} userlist={users} decklist={decks}></MatchCard>
                 ))}
             </Row>
             <Row>

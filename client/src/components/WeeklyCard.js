@@ -5,6 +5,7 @@ import {
 import Card from "react-bootstrap/Card";
 import './../App.scss';
 import CardHeader from "react-bootstrap/esm/CardHeader";
+import { LocalDate } from "../util/TimeHelpers";
 
 const isToday = (someDate) => {
   const today = new Date()
@@ -22,7 +23,7 @@ export default function WeeklyCard(eventObject) {
         <Link to={"/Weeklies/" + eventInfo.id}>
           <Card border={isToday(eventInfo.time) ? "warning" : "secondary"} style={{ backgroundColor: "#232323", marginBottom: "20px", cursor: "pointer" }}>
             <CardHeader as="h5" style={{color:"white"}}>{eventInfo.name}</CardHeader>
-            <Card.Body style={{color:"white"}}>{eventInfo.time}</Card.Body>
+            <Card.Body style={{color:"white"}}>{LocalDate(eventInfo.time+' GMT')}</Card.Body>
             <Card.Body style={{color:"white"}}>{eventInfo.themed ? "Themed" : "No Theme"}</Card.Body>
           </Card>
         </Link>

@@ -60,6 +60,7 @@ export default function MacthPerformanceRow(performanceObject) {
     const users = performanceObject.userlist;
     const starttime = performanceObject.starttime;
     const deckCommanderId = performanceObject.deckcommander;
+    const endtime = performanceObject.endtime;
 
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
@@ -140,17 +141,18 @@ export default function MacthPerformanceRow(performanceObject) {
             <Col>
               <div>
                 <LabelDropdown value={"Finished: " + placement} 
-                  items={Array.from({length: playerCount}, (x, i) => i+1)}
+                  items={endtime ? Array.from({length: playerCount}, (x, i) => i+1) : Array.from({length: playerCount-1}, (x, i) => i+2)}
                   selected={selectedPlace}
                   />
               </div>
             </Col>
             <Col>
               <div>
+                { starttime && 
                 <LabelDropdown value={"Order: " + position} 
                   items={Array.from({length: playerCount}, (x, i) => i+1)}
                   selected={selectedPosition}
-                  />
+                  />}
               </div>
             </Col>
             <Col>
