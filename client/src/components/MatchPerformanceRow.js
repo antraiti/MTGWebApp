@@ -122,10 +122,11 @@ export default function MacthPerformanceRow(performanceObject) {
             </Col>
             <Col>
               <div>
+                { starttime && 
                 <LabelDropdown value={"Order: " + position} 
                   items={Array.from({length: playerCount}, (x, i) => i+1)}
                   selected={selectedPosition}
-                  />
+                  />}
               </div>
             </Col>
             <Col>
