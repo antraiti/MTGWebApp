@@ -80,11 +80,9 @@ export const DeckEditor = () => {
         <Container style={{ padding: "20px" }}>
             <div className="card-footer-container">
                 <div className="footer-header mtg-font-bold">Deck Editor</div>
-                {!deckLegality && <Card>
-                    {deckLegalityMessages && deckLegalityMessages.map((mes) => (
-                        <Card.Body key={mes} style={{color:"red"}}>{mes}</Card.Body>
+                {!deckLegality && deckLegalityMessages && deckLegalityMessages.map((mes) => (
+                        <Card key={mes} style={{color:"red"}}>! {mes}</Card>
                     ))}
-                </Card>}
                 <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <Form>
                         <InputGroup>
