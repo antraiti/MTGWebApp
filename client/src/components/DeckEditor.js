@@ -56,6 +56,8 @@ export const DeckEditor = () => {
     const [deckPartner, setDeckPartner] = useState();
     const [deckCompanion, setDeckCompanion] = useState();
     const [cardList, setCardList] = useState([]);
+    const [deckLegality, setDeckLegality] = useState();
+    const [deckLegalityMessages, setDeckLegalityMessages] = useState([]);
 
     useEffect(() => {
         let mounted = true;
@@ -67,6 +69,8 @@ export const DeckEditor = () => {
                 setDeckPartner(item.deck.partner);
                 setDeckCompanion(item.deck.companion);
                 setCardList(item.cardlist);
+                setDeckLegality(item.legality.legal);
+                setDeckLegalityMessages(item.legality.messages);
             }
             })
         return () => mounted = false;
@@ -76,6 +80,9 @@ export const DeckEditor = () => {
         <Container style={{ padding: "20px" }}>
             <div className="card-footer-container">
                 <div className="footer-header mtg-font-bold">Deck Editor</div>
+                {!deckLegality && deckLegalityMessages && deckLegalityMessages.map((mes) => (
+                        <Card key={mes} style={{color:"red"}}>! {mes}</Card>
+                    ))}
                 <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <Form>
                         <InputGroup>
@@ -86,9 +93,9 @@ export const DeckEditor = () => {
                         <InputGroup>
                         <InputGroup.Text>Commander</InputGroup.Text>
                         <Form.Select type="select" placeholder="Name" value={deckCommander ?? undefined} onChange={e => updateDeck(userToken, id, "commander", e.target.value)}>
-                            <option value={undefined}></option>
+                            <option key="nothing" value={undefined}></option>
                             {cardList.map(card => 
-                                <option value={card[0].cardid}>{card[1].name}</option>
+                                <option key={card[0].cardid} value={card[0].cardid}>{card[1].name}</option>
                                 )}
                         </Form.Select>
                         </InputGroup>
@@ -96,9 +103,9 @@ export const DeckEditor = () => {
                         <InputGroup>
                         <InputGroup.Text>Partner</InputGroup.Text>
                         <Form.Select type="select" placeholder="Name" value={deckPartner ?? undefined} onChange={e => updateDeck(userToken, id, "partner", e.target.value)}>
-                        <option value={undefined}></option>
+                        <option key="nothing" value={undefined}></option>
                         {cardList.map(card => 
-                                <option value={card[0].cardid}>{card[1].name}</option>
+                                <option key={card[0].cardid} value={card[0].cardid}>{card[1].name}</option>
                                 )}
                         </Form.Select>
                         </InputGroup>
@@ -106,9 +113,9 @@ export const DeckEditor = () => {
                         <InputGroup>
                         <InputGroup.Text>Companion</InputGroup.Text>
                         <Form.Select type="select" placeholder="Name" value={deckCompanion ?? undefined} onChange={e => updateDeck(userToken, id, "companion", e.target.value)}>
-                        <option value={undefined}></option>
+                        <option key="nothing" value={undefined}></option>
                         {cardList.map(card => 
-                                <option value={card[0].cardid}>{card[1].name}</option>
+                                <option key={card[0].cardid} value={card[0].cardid}>{card[1].name}</option>
                                 )}
                         </Form.Select>
                         </InputGroup>
@@ -119,15 +126,15 @@ export const DeckEditor = () => {
                         <InputGroup>
                             <InputGroup.Text>Sideboard</InputGroup.Text>
                             <Form.Select type="select" placeholder="Name" value={deckCompanion ?? undefined} onChange={e => updateDeck(userToken, id, "sideboard", e.target.value)}>
-                                <option value={undefined}></option>
+                                <option key="nothing" value={undefined}></option>
                                 {cardList.map(card => 
-                                        <option value={card[0].cardid}>{card[1].name}</option>
+                                        <option key={card[0].cardid} value={card[0].cardid}>{card[1].name}</option>
                                         )}
                                 </Form.Select>
                         </InputGroup>
                         <br/>
                         {cardList.filter((card) => card[0].issideboard).map(card => 
-                            <Card>
+                            <Card key={card[1].name}>
                                 <Stack direction="horizontal">
                                     <label style={{ color: "white"}}>{card[1].name}</label>
                                     <Button variant="danger" style={{ width: "20px", height: "20px", padding:"0px"}} onClick={e => updateDeck(userToken, id, "-sideboard", card[0].cardid)}>x</Button>

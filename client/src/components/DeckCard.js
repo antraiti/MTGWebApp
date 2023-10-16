@@ -44,6 +44,7 @@ export default function DeckCard(deckObject) {
       '--commander-image-url': `url(${getCommanderImageUrl()})`
     }
 
+    console.log(performanceInfo);
     return(
       <Row className="deck-row" direction="horizontal" style={performanceRowStyle}>
         <Col style={{margin:"0",padding:"0"}}>
@@ -80,12 +81,12 @@ export default function DeckCard(deckObject) {
               <Stack direction="horizontal">
                   <Card.Body style={{color:"white"}}>Games Played: {performanceInfo.length}</Card.Body>
                   <Card.Body style={{color:"white"}}>Last Updated: {LocalDateTime(deckInfo.lastupdated)}</Card.Body>
-                  <Card.Body style={{color:"white"}}>Last Used: {deckInfo.lastused && LocalDateTime(deckInfo.lastused)}</Card.Body>
+                  <Card.Body style={{color:"white"}}>Last Used: {performanceInfo.lastused && LocalDateTime(deckInfo.lastused)}</Card.Body>
               </Stack>
             </Card>
           </Link>
         </Col>
-        {!performanceInfo && 
+        {(!performanceInfo || performanceInfo.length == 0) &&
         <Col xs="auto" style={{margin:"0",padding:"0", display:"block"}}>
           <Button className="h-100" variant="danger" onClick={x => deleteFunction(deckInfo.id)} style={{height:"fill"}}>X</Button>
         </Col>}

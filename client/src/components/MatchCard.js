@@ -132,7 +132,7 @@ export default function MatchCard(matchObject) {
           </div>
 
           {performances != null && performances.map((performance) => (
-                <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+                <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid && deck.islegal)}/>
             ))}
         </div>
         <DropdownButton className="add-new-player-button" size="sm" variant="secondary" title="Add Player">
