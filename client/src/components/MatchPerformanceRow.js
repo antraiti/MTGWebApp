@@ -84,7 +84,7 @@ export default function MacthPerformanceRow(performanceObject) {
 
     function getDeckDisplayName() {
       if(performanceData.deckid === null || deckid === undefined || deckid.length <= 0 || deckid < 0) {return "Select Deck"}
-      return performanceObject.decks.find((deck) => deck.id === deckid)?.name;
+      return performanceObject.decks.find((deck) => deck.id == deckid)?.name;
     }
 
     function getKilledByDisplayName() {
