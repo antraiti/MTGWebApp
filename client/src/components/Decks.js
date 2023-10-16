@@ -7,6 +7,7 @@ import Col from "react-bootstrap/esm/Col";
 import Container from "react-bootstrap/Container";
 import './Rules.scss';
 import './../App.scss';
+import './Decks.scss';
 import userData from '../util/UserData';
 import Button from "react-bootstrap/esm/Button";
 import configData from "./../config.json";
@@ -136,13 +137,13 @@ export const Decks = () => {
                             </Col >
                         </Row>
                     </Container>
-                    <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
+                    <Card className="deck-card-container">
                         <div style={{background: "transparent"}}>
                             {decks.slice(0).reverse().map((deck) => (
-                                <DeckCard key={deck[0].id} deckInfo={deck[0]} commanderInfo={deck[1]}
+                                <DeckCard className="deck-card" key={deck[0].id} deckInfo={deck[0]} commanderInfo={deck[1]}
                                 partnerInfo={deck[2]} companionInfo={deck[3]} 
-                                colorInfo={colors.find((c) => c.id == deck[0].identityid)}
-                                performanceInfo={performances.filter((p) => p.deckid == deck[0].id)}
+                                colorInfo={colors.find((c) => c.id === deck[0].identityid)}
+                                performanceInfo={performances.filter((p) => p.deckid === deck[0].id)}
                                 deleteFunction={deleteDeck}></DeckCard>
                             ))}
                         </div>

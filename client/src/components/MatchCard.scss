@@ -1,0 +1,45 @@
+@import '../variables';
+
+.match-name {
+  font-size: 1.4rem;
+}
+
+.match-card {
+  background-color: $app-color-dark;
+  border-radius: 5px;
+  margin-bottom: 40px;
+  color: $white;
+  padding: 16px;
+
+  .match-card-header {
+    background-color: $app-color-dark !important;
+    outline: none;
+    border: none;
+  }
+
+  .match-information {
+    background-color: transparent;
+    padding: 4px 16px;
+  }
+
+  .table-headers {
+    background-color: $app-color-medium;
+    border: 1px solid $app-color-light;
+    border-bottom: none;
+    padding: 4px 16px;
+     
+    div {
+      padding: 0 12px;
+    }
+  }
+}
+
+.add-new-player-button {
+  margin-top: 12px;
+
+  button {
+    min-width: 200px;
+    outline: $app-color-light;
+    background-color: transparent;
+  }
+}

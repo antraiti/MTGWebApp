@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
+import './MatchCard.scss';
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
@@ -94,37 +95,47 @@ export default function MatchCard(matchObject) {
     newPerformance(userToken, user, matchInfo);
   }
     return(
-      <div className="match-card" style={{marginBottom: "40px"}}>
-        <Card style={{ backgroundColor: "#383838", marginBottom: "0px"}}>
+      <div className="match-card">
+        <Card className="match-card-header">
           <Card.Body style={{padding:"5px"}}>
-          <Row>
-            <Col>
-              <h5 as="h5" style={{color:"white"}}>{matchInfo.name}</h5>
-            </Col>
-            <Col>
-              {matchInfo.start != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.start)}</h6></span>)
-              : 
-              (<h6 onClick={() => timestampMatch(true)} style={{color:"lime", cursor:"pointer"}}>Start Match</h6>)}
-            </Col>
-            <Col>
-              {matchInfo.start != null ?
-              matchInfo.end != null ? 
-              (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.end)}</h6></span>)
-              : 
-              (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
-            : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
-            </Col>
-            <Col>
-              {matchInfo.start == null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
-            </Col>
-          </Row>
+            <Row className="match-information">
+              <Col>
+                <h5 className="match-name">{matchInfo.name}</h5>
+              </Col>
+              <Col>
+                {matchInfo.start != null ? 
+                (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>Start:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.start)}</h6></span>)
+                : 
+                (<h6 onClick={() => timestampMatch(true)} style={{color:"lime", cursor:"pointer"}}>Start Match</h6>)}
+              </Col>
+              <Col>
+                {matchInfo.start != null ?
+                matchInfo.end != null ? 
+                (<span style={{display:"flex"}}><h6 as="h5" style={{color:"white", textAlign:"end", paddingRight:"5px"}}>End:</h6><h6 as="h5" style={{color:"grey", textAlign:"end"}}>{LocalTime(matchInfo.end)}</h6></span>)
+                : 
+                (<h6 onClick={() => timestampMatch(false)} style={{color:"red", cursor:"pointer"}}>End Match</h6>)
+              : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
+              </Col>
+              <Col>
+                {matchInfo.start === null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
-        {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid && deck.islegal)}/>
-          ))}
-        <DropdownButton size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
+        <div className="performance-container">
+          <div className="flex-row flex-align-center table-headers mtg-font">
+            <div className="flex-grow">Player Name</div>
+            <div className="flex-grow">Deck Name</div>
+            <div className="flex-grow">Placement</div>
+            <div className="flex-grow">Turn Order</div>
+            <div className="flex-grow">Killed By</div>
+          </div>
+
+          {performances != null && performances.map((performance) => (
+                <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid && deck.islegal)}/>
+            ))}
+        </div>
+        <DropdownButton className="add-new-player-button" size="sm" variant="secondary" title="Add Player">
           {users != null && users.map((user) => (
               <Dropdown.Item key={user.publicid} onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
           ))}

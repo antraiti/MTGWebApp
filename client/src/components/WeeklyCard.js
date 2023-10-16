@@ -10,9 +10,9 @@ import { LocalDate } from "../util/TimeHelpers";
 const isToday = (someDate) => {
   const today = new Date()
   const parsed = new Date(Date.parse(someDate))
-  return parsed.getDate() == today.getDate() &&
-    parsed.getMonth() == today.getMonth() &&
-    parsed.getFullYear() == today.getFullYear()
+  return parsed.getDate() === today.getDate() &&
+    parsed.getMonth() === today.getMonth() &&
+    parsed.getFullYear() === today.getFullYear()
 }
 
 export default function WeeklyCard(eventObject) {

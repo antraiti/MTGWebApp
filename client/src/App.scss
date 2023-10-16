@@ -62,12 +62,17 @@
   flex-direction: column;
 }
 
+.flex-align-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
 .flex-align-space-between {
   display: flex;
   justify-content: space-between;
 }
 
-.flex-align-space-center {
+.flex-align-center {
   display: flex;
   justify-content: center;
 }
@@ -96,9 +101,34 @@
   text-decoration: none;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.dropdown a:hover, .dropdown a:focus-visible {
+  filter: brightness(0.5);
+}
+
 .deck-card {
   &:hover {
     box-shadow: 0px 0px 5px 5px #4b4b4b7b;
     z-index: 1;
   }
+}
+
+.accent {
+  color: $app-accent-medium;
+
+  &.light {
+    color: $app-accent-light;
+  }
+
+  &.dark {
+    color: $app-accent-dark;
+  }
+}
+
+.nav-link.active {
+  color: $app-accent-light !important;
+  font-weight: 600;
 }
