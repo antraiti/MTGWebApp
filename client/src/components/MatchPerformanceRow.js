@@ -1,17 +1,11 @@
 import React, {useState} from "react";
-import {
-  Link
-} from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
 import './MatchPerformanceRow.scss';
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
 import userData from '../util/UserData';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import {LabelDropdown} from '../util/LabelDropdown';
 import {DynamicLabelDropdown} from '../util/DynamicLabelDropdown';
 import configData from "./../config.json";
@@ -27,7 +21,7 @@ async function getDecks(token, userid) {
   .then(data => {
       if(data.status >= 400) {
           throw new Error("Server responds with error!");
-      } else if (data.status == 204) {
+      } else if (data.status === 204) {
           return [];
       }
       return data.json();
@@ -59,9 +53,9 @@ export default function MacthPerformanceRow(performanceObject) {
     const playerCount = performanceObject.playerCount;
     const users = performanceObject.userlist;
     const starttime = performanceObject.starttime;
-    const deckCommanderId = performanceObject.deckcommander;
+    const userDecks = performanceObject.decks;
     const endtime = performanceObject.endtime;
-
+    
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
     const [deckid, setDeckid] = useState([performanceData.deckid]);
@@ -82,19 +76,19 @@ export default function MacthPerformanceRow(performanceObject) {
     }
 
     function selectedDeck(selectedDeck){
-      updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck);
+      updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck);      
     }
     function selectedKilledBy(selectedKilledBy){
       updatePerformance(userToken, performanceData.id, 'killedby', selectedKilledBy);
     }
 
     function getDeckDisplayName() {
-      if(performanceData.deckid == null || deckid == undefined || deckid.length <= 0 || deckid < 0) {return "Select Deck"}
-      return performanceObject.decks.find((deck) => deck.id == deckid)?.name;
+      if(performanceData.deckid === null || deckid === undefined || deckid.length <= 0 || deckid < 0) {return "Select Deck"}
+      return performanceObject.decks.find((deck) => deck.id === deckid)?.name;
     }
 
     function getKilledByDisplayName() {
-      if(performanceData.killedbyname == null || performanceData.killedbyname.length <= 0) {return "Killed By"}
+      if(performanceData.killedbyname === null || performanceData.killedbyname.length <= 0) {return "Killed By"}
       return performanceData.killedbyname;
     }
 
@@ -103,11 +97,19 @@ export default function MacthPerformanceRow(performanceObject) {
      * @returns string
      */
     function getCommanderImageUrl() {
-      // Example: https://cards.scryfall.io/art_crop/front/c/e/ce4c6535-afea-4704-b35c-badeb04c4f4c.jpg
-      
-      const url = 'https://cards.scryfall.io/art_crop/front';
-      url += '/' + commanderId.subString(0, 1);
-      url += '/' + commanderId.subString(1, 1) + '/';
+      if (!userDecks) {
+        return 'https://cards.scryfall.io/art_crop/front/0/e/0eb0e8e7-266f-441e-b1cd-12b8ec3f7d71.jpg'; // Imp's Mischief UwU
+      }
+
+      const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
+      if (!activeDeck) {
+        console.error('Cant find active user deck');
+      }
+
+      const commanderId = activeDeck.commander;
+      let url = 'https://cards.scryfall.io/art_crop/front';
+      url += '/' + commanderId.substring(0, 1);
+      url += '/' + commanderId.substring(1, 2) + '/';
       url += commanderId + '.jpg';
 
       return url;      
@@ -120,14 +122,13 @@ export default function MacthPerformanceRow(performanceObject) {
     return(
       <div className="performance-row" style={performanceRowStyle}>
         <Card>
-          <Card.Body style={{padding:"2px"}} className={selectedPosition === 1 ? 'winner' : ''}>
+          <Card.Body style={{padding:"2px"}} className={performanceData.placement === 1 ? 'winner' : ''}>
           <Row className="align-items-center row-content">
             <Col>
               <h6 
-                style={{color:"white"}}
-                className={selectedPosition === 1 ? 'bold' : ''}
+                className={performanceData.placement === 1 ? 'bold accent' : ''}
               >
-                {performanceData != null && (selectedPosition === 1 ? '🏆 ' + performanceData.username : performanceData.username)}
+                {performanceData != null && (performanceData.placement === 1 ? '🏆 ' + performanceData.username : performanceData.username)}
               </h6>
             </Col>
             <Col>
@@ -140,7 +141,7 @@ export default function MacthPerformanceRow(performanceObject) {
             </Col>
             <Col>
               <div>
-                <LabelDropdown value={"Finished: " + placement} 
+                <LabelDropdown className={placement === 1 ? 'accent' : ''} value={"Finished: " + placement} 
                   items={endtime ? Array.from({length: playerCount}, (x, i) => i+1) : Array.from({length: playerCount-1}, (x, i) => i+2)}
                   selected={selectedPlace}
                   />
@@ -163,7 +164,7 @@ export default function MacthPerformanceRow(performanceObject) {
                   />
               </div>
             </Col>
-            {starttime == null &&
+            {starttime === null &&
             <Col>
                 <Button onClick={deletePerformance} variant="danger" style={{float:"right"}}>X</Button>
             </Col>}

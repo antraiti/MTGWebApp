@@ -77,7 +77,7 @@ export const DeckForm = () => {
                 list: deckList,
                 name: deckName
             }
-            if(id == null) {
+            if(id === null) {
                 setSubmitted(true);
                 SubmitDeck(userToken, di)
                 .then(response => {

@@ -1,0 +1,8 @@
+@import '../_fonts.scss';
+@import '../variables.scss';
+
+.deck-card-container {
+  background-color: $app-color-dark;
+  padding: 12px 24px;
+  margin: 24px 0px;
+}

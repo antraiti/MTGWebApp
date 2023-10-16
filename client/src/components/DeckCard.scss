@@ -1,0 +1,21 @@
+@import '../_fonts.scss';
+@import '../variables.scss';
+
+:root {
+  --commander-image-url: 'https://cards.scryfall.io/art_crop/front/0/e/0eb0e8e7-266f-441e-b1cd-12b8ec3f7d71.jpg';
+}
+
+.deck-row {
+  margin-bottom: 24px;
+  background-image: linear-gradient(90deg, #000000a0 0%, #1D1E1C 60%), var(--commander-image-url);
+  background-position-y: 20%;  
+
+  &:hover, &:focus-visible {
+    background-image: linear-gradient(90deg, #00000030 0%, #1D1E1C 60%), var(--commander-image-url);
+  }
+
+  * {
+    background: red !important;
+    background-color: transparent !important;
+  }
+}

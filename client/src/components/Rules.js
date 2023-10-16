@@ -9,8 +9,8 @@ export const Rules = () => {
     return (
         <Container style={{ padding: "20px" }}>
             <Row>
-                <div class="card-footer-container">
-                    <div class="footer-header mtg-font-bold">Deck Requirements and Restrictions</div>
+                <div className="card-footer-container">
+                    <div className="footer-header mtg-font-bold">Deck Requirements and Restrictions</div>
                     <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                         <ul>
                             <li className="section-li">60 card deck</li>
@@ -24,8 +24,8 @@ export const Rules = () => {
                 </div>
             </Row>
             <Row>
-                <div class="card-footer-container">
-                    <div class="footer-header mtg-font-bold">Basic Game Rules</div>
+                <div className="card-footer-container">
+                    <div className="footer-header mtg-font-bold">Basic Game Rules</div>
                     <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                         <ul>
                             <li className="section-li">2+ players</li>
@@ -38,20 +38,24 @@ export const Rules = () => {
                 </div>
             </Row>
             <Row>
-                <div class="card-footer-container">
-                    <div class="footer-header mtg-font-bold">Important Things to Note</div>
+                <div className="card-footer-container">
+                    <div className="footer-header mtg-font-bold">Important Things to Note</div>
                     <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                         <ul>
-                            <li className="section-li">There is no “commander damage” like in the Commander format.</li>
-                            <li className="section-li">There are no “signature spells” like in the Oathbreaker format.</li>
-                            <li className="section-li">If your playgroup wants to use different rules you have our explicit permission right here to do so (as long as your friends agree!).</li>
-                            <li className="section-li">A card's color identity can come from any part of that card, including its casting cost and any mana symbols in its text. Every card in your deck must only use mana symbols that also appear on your commander. Mana symbols included in reminder text, like extort, are not technically part of the card and are therefore excluded in the card’s color identity. Basic lands are included in this rule, you may only use basic lands that are part of your commander’s color identity in your deck.</li>
-                            <li className="section-li">The command zone is where your commander resides during the game when they are not in play. At the start of the game, each player puts their commander face up into the command zone, typically towards the center of the play area. A commander can be cast from the command zone for its normal costs, plus an additional two generic mana for each previous time it's been cast from the command zone this game. If your commander is put into your library, hand, graveyard or exile from anywhere, you may return it to your command zone.</li>
-                            <li className="section-li">BB follows the same mulligan rules as other multiplayer formats. Each player gets one free mulligan, followed by the standard London Mulligan. Each player draws a card on their first turn of the game.</li>
-                            <li className="section-li">Conceding the game is encouraged to be a sorcery speed action</li>
-                            <li className="section-li">If you would like to use a companion alongside your Commander: Your companion is part of your deck’s sideboard, your deck (including commander(s)) must follow the deck building restrictions of the companion, and your companion must be in the same color identity as your commander.</li>
-                            <li className="section-li">Updated companion rule from WotC: Once per game, any time you could cast a sorcery (during your main phase when the stack is empty), you can pay 3 generic mana to put your companion from your sideboard into your hand. This is a special action, not an activated ability.</li>
-                            <li className="section-li">Yorion, Sky Nomad is legal to play as a companion (for now) and if you choose to do so, your deck must be 80 cards. This is the only exception to the 60 card deck size rule, because it’s fun.</li>
+                            <li className="section-li"><b className="accent">Rule 0:</b> If your playgroup wants to use different rules you have our explicit permission right here to do so (as long as your friends agree!).</li>
+                            <li className="section-li"><b className="accent">Command Damage:</b> There is no “commander damage” like in the Commander format.</li>
+                            <li className="section-li"><b className="accent">Signature Spells:</b> There are no “signature spells” like in the Oathbreaker format.</li>
+                            <li className="section-li"><b className="accent">Color Identity:</b> A card's color identity can come from any part of that card, including its casting cost and any mana symbols in its text. Every card in your deck must only use mana symbols that also appear on your commander. Mana symbols included in reminder text, like extort, are not technically part of the card and are therefore excluded in the card’s color identity. Basic lands are included in this rule, you may only use basic lands that are part of your commander’s color identity in your deck.</li>
+                            <li className="section-li"><b className="accent">Command Zone:</b> The command zone is where your commander resides during the game when they are not in play. At the start of the game, each player puts their commander face up into the command zone, typically towards the center of the play area. A commander can be cast from the command zone for its normal costs, plus an additional two generic mana for each previous time it's been cast from the command zone this game. If your commander is put into your library, hand, graveyard or exile from anywhere, you may return it to your command zone.</li>
+                            <li className="section-li"><b className="accent">Mulligans:</b> BB follows the same mulligan rules as other multiplayer formats. Each player gets one free mulligan, followed by the standard London Mulligan. Each player draws a card on their first turn of the game.</li>
+                            <li className="section-li"><b className="accent">Surrendering:</b>Conceding the game is encouraged to be a sorcery speed action</li>
+                            <li className="section-li"><b className="accent">Companions:</b></li>
+                            <ul>
+                            <li className="section-li"><b className="accent light">Part of the Sideboard:</b> If you would like to use a companion alongside your Commander: Your companion is part of your deck’s sideboard, your deck (including commander(s)) must follow the deck building restrictions of the companion, and your companion must be in the same color identity as your commander.</li>
+                            <li className="section-li"><b className="accent light">Bringing to Hand:</b> Updated companion rule from WotC: Once per game, any time you could cast a sorcery (during your main phase when the stack is empty), you can pay 3 generic mana to put your companion from your sideboard into your hand. This is a special action, not an activated ability.</li>
+                            <li className="section-li"><b className="accent light">Yorion:</b> Yorion, Sky Nomad is legal to play as a companion (for now) and if you choose to do so, your deck must be 80 cards. This is the only exception to the 60 card deck size rule, because it’s fun.</li>
+                            </ul>
+                            
                         </ul>
                     </Card>
                 </div>

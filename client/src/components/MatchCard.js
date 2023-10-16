@@ -2,7 +2,6 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
 import './MatchCard.scss';
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Button from "react-bootstrap/esm/Button";
@@ -97,11 +96,11 @@ export default function MatchCard(matchObject) {
   }
     return(
       <div className="match-card">
-        <Card>
+        <Card className="match-card-header">
           <Card.Body style={{padding:"5px"}}>
             <Row className="match-information">
               <Col>
-                <h5 style={{color:"white"}}>{matchInfo.name}</h5>
+                <h5 className="match-name">{matchInfo.name}</h5>
               </Col>
               <Col>
                 {matchInfo.start != null ? 
@@ -118,23 +117,25 @@ export default function MatchCard(matchObject) {
               : (<h5 as="h5" style={{color:"white", textAlign:"end"}}></h5>)}
               </Col>
               <Col>
-                {matchInfo.start == null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
+                {matchInfo.start === null && (<Button as="h5" onClick={deleteMatch} variant="danger" style={{float:"right"}}>X</Button>)}
               </Col>
             </Row>
           </Card.Body>
         </Card>
-        <div className="flex-row flex-align-center table-headers">
-          <div>Player Name</div>
-          <div>Deck Name</div>
-          <div>Placement</div>
-          <div>Turn Order</div>
-          <div>Killed By</div>
-        </div>
+        <div className="performance-container">
+          <div className="flex-row flex-align-center table-headers mtg-font">
+            <div className="flex-grow">Player Name</div>
+            <div className="flex-grow">Deck Name</div>
+            <div className="flex-grow">Placement</div>
+            <div className="flex-grow">Turn Order</div>
+            <div className="flex-grow">Killed By</div>
+          </div>
 
-        {performances != null && performances.map((performance) => (
-              <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
-          ))}
-        <DropdownButton className="add-new-player-button" size="sm" variant="secondary" title="Add Player" style={{cursor:"pointer", marginLeft:"20px"}}>
+          {performances != null && performances.map((performance) => (
+                <MatchPerformanceRow key={performance.id} performanceData={performance} playerCount={performances.length} userlist={users} starttime={matchInfo.start} endtime={matchInfo.end} decks={decks.filter(deck => deck.userid === performance.userid)}/>
+            ))}
+        </div>
+        <DropdownButton className="add-new-player-button" size="sm" variant="secondary" title="Add Player">
           {users != null && users.map((user) => (
               <Dropdown.Item key={user.publicid} onClick={() => createPerformance(user)}>{user.username}</Dropdown.Item>
           ))}

@@ -119,3 +119,38 @@
 .crown-container {
   background: url('../assets/images/thick_crown.svg');
 }
+
+.logo-splash {
+  height: 50vh;
+  width: 100%;
+  background: url('../assets/images/rumble_colored_cropped.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: -32px 0 24px 0;
+}
+
+.icon {
+  filter: brightness(10);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 64px;
+  width: 100%;
+  margin-block: 12px;
+
+  &.dragon {
+    background-image: url('../assets/images/icons/dragon-icon.png');
+    filter: invert(1);
+  }
+
+  &.cards {
+    background-image: url('../assets/images/icons/blank-playing-cards.png');
+    filter: brightness(0) invert(1);
+  }
+
+  &.life {
+    background-image: url('../assets/images/icons/heart-outline.png');
+    filter: invert(1);
+  }
+}
