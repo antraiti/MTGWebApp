@@ -25,11 +25,10 @@
   .table-headers {
     background-color: $app-color-medium;
     border: 1px solid $app-color-light;
-    border-bottom: none;
-    padding: 4px 16px;
+    padding: 4px 12px;
      
     div {
-      padding: 0 12px;
+      flex-basis: 13%;      
     }
   }
 }
@@ -42,4 +41,8 @@
     outline: $app-color-light;
     background-color: transparent;
   }
+}
+
+.commander-header {
+  padding-left: 18px;
 }

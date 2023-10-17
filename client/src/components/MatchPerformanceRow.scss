@@ -4,26 +4,31 @@
   --commander-image-url: 'https://cards.scryfall.io/art_crop/front/0/e/0eb0e8e7-266f-441e-b1cd-12b8ec3f7d71.jpg';
 }
 
+
+
 .performance-row {
-  background-color: $app-color-dark;
-  margin: -1px 0;
+  background-color: $app-color-dark;  
 
   .card {
     background: $app-color-dark;    
 
     .card-body {          
-      background-image: linear-gradient(90deg, #000000b0 0%, #1D1E1C 40%), var(--commander-image-url);
+      background-image: linear-gradient(90deg, #000000d0 0%, #1D1E1C 40%), var(--commander-image-url);
       background-position-y: 40%;
-      outline: $app-color-light 1px solid;
+      border: $app-color-light 1px solid;
+      outline: none;
       padding: 2px;
       background-repeat: no-repeat;
+      // min-height: 70px;
 
       &:hover {
         background-image: linear-gradient(90deg, #00000030 0%, #1D1E1C 40%), var(--commander-image-url);
       }
 
       &.winner {
-        border: gold 1px solid;
+        outline: 1px solid #ffff0090;
+        border: none;
+        margin: 1px;
 
         .bold.accent {
           filter: drop-shadow(2px 2px 2px #00000090)
@@ -32,7 +37,55 @@
 
       .row-content {
         padding: 10px 10px 10px 24px;
+        margin: 10px 0;
+
+        div {
+          flex-basis: 15%;
+        }
       }
     }
   }
+}
+
+
+.commander-splash {
+  height: 70px;
+  width: 90px;
+}
+
+.deck-name a {
+    overflow: hidden;
+    line-height: 1rem;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    max-width: 80%;
+}
+
+.image-column {
+  flex-basis: 13%;
+  background-image: var(--commander-image-url);
+  background-size: cover;
+  border: 1px solid $app-color-light;
+  margin: 1px;
+  transition: .2s;
+  cursor: pointer;
+
+  
+
+  &.winner {
+    border: 1px solid #ffff0090;
+  }
+
+  &.washed:not(.winner) {
+    filter: grayscale(.8);
+    opacity: .7;
+
+    &:hover {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+  }
+
+  
 }

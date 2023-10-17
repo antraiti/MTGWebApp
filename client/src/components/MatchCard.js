@@ -124,11 +124,12 @@ export default function MatchCard(matchObject) {
         </Card>
         <div className="performance-container">
           <div className="flex-row flex-align-center table-headers mtg-font">
-            <div className="flex-grow">Player Name</div>
+            <div className="commander-header">Commander</div>
+            <div className="">Player Name</div>
             <div className="flex-grow">Deck Name</div>
-            <div className="flex-grow">Placement</div>
-            <div className="flex-grow">Turn Order</div>
-            <div className="flex-grow">Killed By</div>
+            <div className="">Placement</div>
+            <div className="">Turn Order</div>
+            <div className="">Killed By</div>
           </div>
 
           {performances != null && performances.map((performance) => (
