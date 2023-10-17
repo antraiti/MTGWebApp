@@ -9,6 +9,7 @@ import userData from '../util/UserData';
 import {LabelDropdown} from '../util/LabelDropdown';
 import {DynamicLabelDropdown} from '../util/DynamicLabelDropdown';
 import configData from "./../config.json";
+import { Tooltip } from 'react-tooltip'
 
 async function getDecks(token, userid) {
   return fetch(configData.API_URL+'/deck/'+userid, {
@@ -55,7 +56,7 @@ export default function MacthPerformanceRow(performanceObject) {
     const starttime = performanceObject.starttime;
     const userDecks = performanceObject.decks;
     const endtime = performanceObject.endtime;
-    
+
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
     const [deckid, setDeckid] = useState([performanceData.deckid]);
@@ -119,35 +120,67 @@ export default function MacthPerformanceRow(performanceObject) {
       '--commander-image-url': `url(${getCommanderImageUrl()})`
     }
 
+    function getImageClass() {
+      if (endtime) {
+        return 'flex-column image-column washed';
+      } else {
+        return 'flex-column image-column';
+      }
+    }
+
+    const navigateToCommanderScryfall = async () => {
+      const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
+      if (!activeDeck) {
+        console.error('Cant find active user deck');
+      }
+      const commanderId = activeDeck.commander;
+      const uri = ('https://www.scryfall.com/card/' + commanderId);
+      //length is a current hack to get if a card is a scryfall eligible card since we will make custom ids shorter
+      //In the future will have a flag to note if a card is real or custom
+      if (commanderId && commanderId.length == 36) {
+        window.open(uri);
+      }
+      return uri;
+    }
+
     return(
-      <div className="performance-row" style={performanceRowStyle}>
-        <Card>
-          <Card.Body style={{padding:"2px"}} className={performanceData.placement === 1 ? 'winner' : ''}>
-          <Row className="align-items-center row-content">
-            <Col>
+      <div className="performance-row flex-row" style={performanceRowStyle} >
+        <a 
+          className={performanceData.placement === 1 ? 'winner ' + getImageClass() : getImageClass()}
+          onClick={navigateToCommanderScryfall}
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={"Commander Name"}
+          
+        >     
+        </a>
+        <Tooltip id="my-tooltip" place="left" />
+        <Card className="flex-column flex-grow">
+          <Card.Body className={performanceData.placement === 1 ? 'winner' : ''}>
+          <div className="flex-row align-items-center row-content">          
+            <div className="flex-column">
               <h6 
                 className={performanceData.placement === 1 ? 'bold accent' : ''}
               >
                 {performanceData != null && (performanceData.placement === 1 ? '🏆 ' + performanceData.username : performanceData.username)}
               </h6>
-            </Col>
-            <Col>
+            </div>
+            <div className="flex-column flex-grow deck-name">
               <div>
                 <DynamicLabelDropdown value={getDeckDisplayName()} 
                   items={performanceObject.decks.map((deck) => ({d: (new Date(Date.parse(deck.lastupdated)).toLocaleDateString("en-US") + ' ' + deck.name), v: deck.id})).reverse()}
                   selected={selectedDeck}
                   />
               </div>
-            </Col>
-            <Col>
+            </div>
+            <div className="flex-column">
               <div>
                 <LabelDropdown className={placement === 1 ? 'accent' : ''} value={"Finished: " + placement} 
                   items={endtime ? Array.from({length: playerCount}, (x, i) => i+1) : Array.from({length: playerCount-1}, (x, i) => i+2)}
                   selected={selectedPlace}
                   />
               </div>
-            </Col>
-            <Col>
+            </div>
+            <div className="flex-column">
               <div>
                 { starttime && 
                 <LabelDropdown value={"Order: " + position} 
@@ -155,20 +188,20 @@ export default function MacthPerformanceRow(performanceObject) {
                   selected={selectedPosition}
                   />}
               </div>
-            </Col>
-            <Col>
+            </div>
+            <div className="flex-column">
               <div>
               <DynamicLabelDropdown value={getKilledByDisplayName()} 
                   items={performanceObject.userlist.map((user) => ({d: user.username, v: user.publicid}))}
                   selected={selectedKilledBy}
                   />
               </div>
-            </Col>
+            </div>
             {starttime === null &&
-            <Col>
+            <div className="flex-column">
                 <Button onClick={deletePerformance} variant="danger" style={{float:"right"}}>X</Button>
-            </Col>}
-          </Row>
+            </div>}
+          </div>
           </Card.Body>
         </Card>
       </div>

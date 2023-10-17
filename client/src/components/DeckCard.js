@@ -44,7 +44,6 @@ export default function DeckCard(deckObject) {
       '--commander-image-url': `url(${getCommanderImageUrl()})`
     }
 
-    console.log(performanceInfo);
     return(
       <Row className="deck-row" direction="horizontal" style={performanceRowStyle}>
         <Col style={{margin:"0",padding:"0"}}>
