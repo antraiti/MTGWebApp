@@ -129,24 +129,17 @@ export default function MacthPerformanceRow(performanceObject) {
     }
 
     const navigateToCommanderScryfall = async () => {
-      //https://api.scryfall.com/cards/f295b713-1d6a-43fd-910d-fb35414bf58a
-
       const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
       if (!activeDeck) {
         console.error('Cant find active user deck');
       }
-
       const commanderId = activeDeck.commander;
-      const response = await fetch('https://api.scryfall.com/cards/' + commanderId);
-      if (!response.ok) {
-        console.error('could not fetch scryfall commander link: ' + commanderId);
-        return;
+      const uri = ('https://www.scryfall.com/card/' + commanderId);
+      //length is a current hack to get if a card is a scryfall eligible card since we will make custom ids shorter
+      //In the future will have a flag to note if a card is real or custom
+      if (commanderId && commanderId.length == 36) {
+        window.open(uri);
       }
-      const data = await response.json();
-      
-      const uri = data['scryfall_uri'];
-      window.open(uri);
-
       return uri;
     }
 
@@ -156,7 +149,7 @@ export default function MacthPerformanceRow(performanceObject) {
           className={performanceData.placement === 1 ? 'winner ' + getImageClass() : getImageClass()}
           onClick={navigateToCommanderScryfall}
           data-tooltip-id="my-tooltip"
-          data-tooltip-content="Commander Name"
+          data-tooltip-content={"Commander Name"}
           
         >     
         </a>
