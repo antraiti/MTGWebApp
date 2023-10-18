@@ -40,7 +40,7 @@ function App() {
       <div className="App">
         <Navbar variant="dark" className='navigation-bar'>
           <Container>
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand as={Link} to="/" className='relative'>
               <img
                 alt=""
                 src={logo}

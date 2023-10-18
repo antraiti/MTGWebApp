@@ -52,6 +52,10 @@
   background-image: linear-gradient(#030303, transparent);
 }
 
+.relative {
+  position: relative;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -131,4 +135,17 @@
 .nav-link.active {
   color: $app-accent-light !important;
   font-weight: 600;
+}
+
+.navbar-brand {
+  height: 30px;
+  width: 50px;
+
+  img {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    top: -15px;
+    left: -7px;
+  }
 }
