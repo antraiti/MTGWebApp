@@ -105,9 +105,13 @@ export default function MacthPerformanceRow(performanceObject) {
       const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
       if (!activeDeck) {
         console.error('Cant find active user deck');
+        return ""
       }
 
       const commanderId = activeDeck.commander;
+      if (!activeDeck.commander || activeDeck.commander == null || activeDeck.commander === null) {
+        return 'https://cards.scryfall.io/art_crop/front/0/e/0eb0e8e7-266f-441e-b1cd-12b8ec3f7d71.jpg';
+      }
       let url = 'https://cards.scryfall.io/art_crop/front';
       url += '/' + commanderId.substring(0, 1);
       url += '/' + commanderId.substring(1, 2) + '/';
@@ -132,7 +136,9 @@ export default function MacthPerformanceRow(performanceObject) {
       const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
       if (!activeDeck) {
         console.error('Cant find active user deck');
+        return ""
       }
+
       const commanderId = activeDeck.commander;
       const uri = ('https://www.scryfall.com/card/' + commanderId);
       //length is a current hack to get if a card is a scryfall eligible card since we will make custom ids shorter

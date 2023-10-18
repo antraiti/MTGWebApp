@@ -30,6 +30,7 @@ async function getUsers(token) {
   }
 
   async function SubmitDeck(token, di) {
+    console.log("submitting deck")
     return fetch(configData.API_URL+'/deck/v2', {
     method: 'POST',
     headers: {
@@ -72,12 +73,13 @@ export const DeckForm = () => {
       }, [])
 
     const finalizeDeck = () => {
+        console.log("Finalizing deck")
             const di = {
                 user: deckUser,
                 list: deckList,
                 name: deckName
             }
-            if(id === null) {
+            if(id == null) {
                 setSubmitted(true);
                 SubmitDeck(userToken, di)
                 .then(response => {
