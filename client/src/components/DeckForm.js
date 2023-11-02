@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -29,22 +28,9 @@ async function getUsers(token) {
         return data.json();
     })
   }
-  async function getDeckInfo(token, id) {
-    return fetch(configData.API_URL+'/deck/v2/'+id, {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }})
-    .then(data => {
-        if(data.status >= 400) {
-            throw new Error("Server responds with error!");
-        }
-        return data.json();
-    })
-  }
 
   async function SubmitDeck(token, di) {
+    console.log("submitting deck")
     return fetch(configData.API_URL+'/deck/v2', {
     method: 'POST',
     headers: {
@@ -68,11 +54,10 @@ async function getUsers(token) {
 export const DeckForm = () => {
     const { id } = useParams();
     const [users, setUsers] = useState();
-    const { user, setUserData, userName, userToken, removeUserData } = userData();
+    const { user, userToken } = userData();
     const [deckList, setDeckList] = useState("");
     const [deckUser, setDeckUser] = useState(user.publicid);
     const [deckName, setDeckName] = useState("");
-    const [deckInfo, setDeckInfo] = useState({});
     const [submitted, setSubmitted] = useState(false);
     let navigate = useNavigate();
 
@@ -81,22 +66,14 @@ export const DeckForm = () => {
         getUsers(userToken)
         .then(item => {
             if(mounted) {
-                console.log(item);
                 setUsers(item);
             }
             })
-        if(id != null) {
-            getDeckInfo(userToken, id)
-            .then(item => {
-                if(mounted) {
-                    setDeckInfo(item);
-                }
-                })
-        }
         return () => mounted = false;
       }, [])
 
     const finalizeDeck = () => {
+        console.log("Finalizing deck")
             const di = {
                 user: deckUser,
                 list: deckList,
@@ -116,15 +93,15 @@ export const DeckForm = () => {
 
     return (
         <Container style={{ padding: "20px" }}>
-            <div class="card-footer-container">
-                <div class="footer-header mtg-font-bold">New Deck Form</div>
+            <div className="card-footer-container">
+                <div className="footer-header mtg-font-bold">New Deck Form</div>
                 <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
                     <Form>
                         <InputGroup>
                         <InputGroup.Text>Player</InputGroup.Text>
                         {users && users.length > 0 && <Form.Select aria-label="User selection" value={deckUser} onChange={e => setDeckUser(e.target.value)} disabled={submitted}>
                             {users.map(usr => 
-                                <option value={usr.publicid}>{usr.username}</option>
+                                <option key={usr.publicid} value={usr.publicid}>{usr.username}</option>
                                 )}
                             </Form.Select>}
                         </InputGroup>

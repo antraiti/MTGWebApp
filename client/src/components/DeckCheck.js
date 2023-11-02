@@ -56,8 +56,8 @@ export const DeckCheck = () => {
 
     return (
         <Container style={{ padding: "20px" }}>
-            <div class="card-footer-container">
-                <div class="footer-header mtg-font-bold">Deck Legality Checker</div>
+            <div className="card-footer-container">
+                <div className="footer-header mtg-font-bold">Deck Legality Checker</div>
                 <Card style={{ backgroundColor: "#232323", padding: "20px" }}>
                     <p style={{color: "white"}}>This tool is designed to give a quick deck list check for any banned cards (does not currently check for un-set cards). Input your cardlist.</p>
                     <div class="container">
@@ -65,11 +65,11 @@ export const DeckCheck = () => {
                         <div class="col">
                             <textarea onChange={checkBannedCards} class="form-control" id="deckCheckTextArea" rows="20"></textarea>
                         </div>
-                        <div class="col" style={{ paddingLeft: "40px"}}>
-                            <div class="row">
+                        <div className="col" style={{ paddingLeft: "40px"}}>
+                            <div className="row">
                                 <label style={{color: "white"}}>Banned Cards:</label>
                             </div>
-                            <div class="row">
+                            <div className="row">
                                 {errorList.map(error => (<li style={{color: "red"}}>{error}</li>))}
                             </div>
                         </div>

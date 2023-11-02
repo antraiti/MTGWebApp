@@ -7,6 +7,7 @@ import Col from "react-bootstrap/esm/Col";
 import Container from "react-bootstrap/Container";
 import './Rules.scss';
 import './../App.scss';
+import './Decks.scss';
 import userData from '../util/UserData';
 import Button from "react-bootstrap/esm/Button";
 import configData from "./../config.json";
@@ -46,15 +47,40 @@ async function getDecks(token) {
     })
 }
 
+async function sendDeleteDeckRequest(token, id) {
+    return fetch(configData.API_URL+'/removedeck/'+id, {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+    }})
+    .then(data => {
+        if(data.status >= 400) {
+            throw new Error("Server responds with error!");
+        } else if (data.status === 204) {
+            return [];
+        }
+        return data.json();
+    })
+}
+
 //Change name once replacing old decks page
 export const Decks = () => {
     const { user, setUserData, userName, userToken, removeUserData } = userData();
     const [decks, setDecks] = useState([]);
+    const [performances, setPerformances] = useState([]);
     const [colors, setColors] = useState([]);
     let navigate = useNavigate(); 
     const createDeck = () => {
         let path = `DeckForm/`; 
         navigate(path);
+    }
+
+    const deleteDeck = (id) => {
+        sendDeleteDeckRequest(userToken, id).then(()=>{
+            window.location.reload(false); //still shouldnt be full reloading, needs to switch to just removing element
+        })
     }
 
     useEffect(() => {
@@ -68,8 +94,8 @@ export const Decks = () => {
         getDecks(userToken)
         .then(items => {
         if(mounted) {
-            console.log(items)
-            setDecks(items)
+            setDecks(items.deckandcards)
+            setPerformances(items.performances)
         }
         })
         return () => mounted = false;
@@ -111,11 +137,14 @@ export const Decks = () => {
                             </Col >
                         </Row>
                     </Container>
-                    <Card style={{ backgroundColor: "#232323", padding: "20px", marginBottom: "20px" }}>
+                    <Card className="deck-card-container">
                         <div style={{background: "transparent"}}>
                             {decks.slice(0).reverse().map((deck) => (
-                                <DeckCard deckInfo={deck[0]} commanderInfo={deck[1]}
-                                partnerInfo={deck[2]} companionInfo={deck[3]} colorInfo={colors.find((c) => c.id == deck[0].identityid)}></DeckCard>
+                                <DeckCard className="deck-card" key={deck[0].id} deckInfo={deck[0]} commanderInfo={deck[1]}
+                                partnerInfo={deck[2]} companionInfo={deck[3]} 
+                                colorInfo={colors.find((c) => c.id === deck[0].identityid)}
+                                performanceInfo={performances.filter((p) => p.deckid === deck[0].id)}
+                                deleteFunction={deleteDeck}></DeckCard>
                             ))}
                         </div>
                     </Card>

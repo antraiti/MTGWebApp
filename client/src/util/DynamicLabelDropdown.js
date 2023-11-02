@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/esm/Button";
 
 
 // Dropdown needs access to the DOM node in order to position the Menu
@@ -61,7 +60,7 @@ export const DynamicLabelDropdown = ({value, items, selected}) => {
       
           <Dropdown.Menu as={CustomMenu} style={{color:"white", textDecoration:"none"}}>
             {items != null && items.map((i) => (
-                <Dropdown.Item eventKey={i.v}>{i.d}</Dropdown.Item>
+                <Dropdown.Item key={i.v} eventKey={i.v}>{i.d}</Dropdown.Item>
             ))}
           </Dropdown.Menu>
         </Dropdown>
