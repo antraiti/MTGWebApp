@@ -59,7 +59,7 @@ export const DeckCheck = () => {
             <div className="card-footer-container">
                 <div className="footer-header mtg-font-bold">Deck Legality Checker</div>
                 <Card style={{ backgroundColor: "#232323", padding: "20px" }}>
-                    <p style={{color: "white"}}>This tool is designed to give a quick deck list check for any banned cards (does not currently check for un-set cards). Input your cardlist.</p>
+                    <p style={{color: "white"}}>This tool is designed to give a quick deck list check for any banned cards. Input your cardlist.</p>
                     <div class="container">
                     <div class="row">
                         <div class="col">
