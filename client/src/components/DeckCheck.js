@@ -22,7 +22,7 @@ export const DeckCheck = () => {
             fetch(silverbanlist).then(r => r.text()),
             fetch(alchemybanlist).then(r => r.text())
         ]).then(textArray => {
-            const combinedBannedCards = textArray.join('\n').split('\r\n');
+            const combinedBannedCards = textArray.join('\r\n').split('\r\n');
             setBannedCards(combinedBannedCards);
         });
     }, []); 
@@ -44,6 +44,7 @@ export const DeckCheck = () => {
                 return;
             }
 
+            cardName.replace(/\n/g, '');
             if (bannedCards.map(item => item.toLocaleLowerCase()).includes(cardName.toLocaleLowerCase())) {
                 newErrors.push(cardName);
             }
