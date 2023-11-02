@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';import "./Banlist.scss"
-import "./../App.scss"
-import banlist from "./../assets/banlist.txt"
+import Tooltip from 'react-bootstrap/Tooltip';import "./Banlist.scss";
+import "./../App.scss";
+import banlist from "./../assets/banlist.txt";
+import silverbanlist from './../assets/banlist-silver.txt';
 
 export const DeckCheck = () => {
     const [errorList, setErrorList] = useState([]);
@@ -15,6 +16,24 @@ export const DeckCheck = () => {
         const inputtext = event.target.value
         const newErrors = []
         fetch(banlist)
+            .then(r => r.text())
+            .then(text => {
+                text.split('\r\n').map(card => {
+                    inputtext.split('\n').map(entry => {
+                        const firstChar = entry.charAt(0);
+                        let trimmed = "";
+                        if( firstChar >= '0' && firstChar <= '9') {
+                            trimmed = entry.substring(entry.indexOf(' ')+1);
+                        } else {
+                            trimmed = entry;
+                        }
+                        if(trimmed.toUpperCase() === card.toUpperCase()){newErrors.push(card);}
+                    });
+                })
+                setErrorList(newErrors);
+            });
+
+        fetch(silverbanlist)
             .then(r => r.text())
             .then(text => {
                 text.split('\r\n').map(card => {
