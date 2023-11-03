@@ -1,0 +1,40 @@
+.deck-contents-card {
+    padding: 16px;
+}
+
+.commander-crop {
+    margin-bottom: 16px;
+    padding: 16px;
+    min-height: 300px;
+
+    .cropper-container {
+        position: relative;
+        width: 340px;
+        height: 250px;
+        border: 1px solid #ffff0050;
+    }
+
+    .commander-image {
+        background-image: var(--commander-image-url);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 150px;
+        width: 300px;
+        border: solid 1px #ffff0060;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover, &:focus-visible {
+            filter: brightness(.8);
+        }
+    }
+}
+
+.card-grid {
+    white-space: pre-line;
+    padding: 8px;
+    background-color: #fefefe;
+    border-radius: 10px;
+    border: solid 1px #aaaaaa;
+    font-size: 12px;
+}
