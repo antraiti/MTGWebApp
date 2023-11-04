@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Card from "react-bootstrap/Card";
 import './../App.scss';
 import './MatchPerformanceRow.scss';
@@ -61,6 +61,11 @@ export default function MacthPerformanceRow(performanceObject) {
     const [position, setPosition] = useState([performanceData.order]);
     const [deckid, setDeckid] = useState([performanceData.deckid]);
     const [killedby, setKilledby] = useState([performanceData.killedby]);
+    const [commanderName, setCommanderName] = useState();
+
+    useEffect(() => {
+      getCommanderName();
+    })
 
     function selectedPlace(selectedPlace){
       updatePerformance(userToken, performanceData.id, 'placement', selectedPlace);
@@ -77,20 +82,55 @@ export default function MacthPerformanceRow(performanceObject) {
     }
 
     function selectedDeck(selectedDeck){
-      updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck);      
+      updatePerformance(userToken, performanceData.id, 'deckid', selectedDeck); 
+      getCommanderName();     
     }
     function selectedKilledBy(selectedKilledBy){
       updatePerformance(userToken, performanceData.id, 'killedby', selectedKilledBy);
     }
 
     function getDeckDisplayName() {
-      if(performanceData.deckid === null || deckid === undefined || deckid.length <= 0 || deckid < 0) {return "Select Deck"}
+      if (performanceData.deckid === null || deckid === undefined || deckid.length <= 0 || deckid < 0) {
+        return "Select Deck"
+      }
       return performanceObject.decks.find((deck) => deck.id == deckid)?.name;
     }
 
     function getKilledByDisplayName() {
       if(performanceData.killedbyname === null || performanceData.killedbyname.length <= 0) {return "Killed By"}
       return performanceData.killedbyname;
+    }
+
+    async function getCommanderName() {
+      if (!userDecks) {
+        return 'N/A';
+      }
+
+      const activeDeck = performanceObject.decks.find((deck) => deck.id === performanceData.deckid);
+      if (!activeDeck) {
+        console.error('Cant find active user deck');
+        return ""
+      }
+
+      const commanderId = activeDeck.commander;
+      if (!activeDeck.commander || activeDeck.commander == null || activeDeck.commander === null) {
+        return 'N/A';
+      }
+
+      try {
+        // Make an API request to Scryfall to get the card name
+        return await fetch(`https://api.scryfall.com/cards/${commanderId}`)
+          .then(response => response.json())
+          .then(cardData => {
+            const commanderName = cardData.name;            
+            setCommanderName(commanderName);
+          })        
+      } catch (error) {
+        console.error('An error occurred while fetching card data', error);
+        return 'N/A';
+      }
+
+
     }
 
     /**
@@ -155,7 +195,7 @@ export default function MacthPerformanceRow(performanceObject) {
           className={performanceData.placement === 1 ? 'winner ' + getImageClass() : getImageClass()}
           onClick={navigateToCommanderScryfall}
           data-tooltip-id="my-tooltip"
-          data-tooltip-content={"Commander Name"}
+          data-tooltip-content={commanderName}
           
         >     
         </a>
