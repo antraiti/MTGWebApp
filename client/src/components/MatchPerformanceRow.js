@@ -29,6 +29,24 @@ async function getDecks(token, userid) {
   })
 }
 
+async function getCard(token, cardid) {
+  return fetch(configData.API_URL+'/card/'+cardid, {
+  method: 'GET',
+  headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token
+  }})
+  .then(data => {
+      if(data.status >= 400) {
+          throw new Error("Server responds with error!");
+      } else if (data.status === 204) {
+          return [];
+      }
+      return data.json();
+  })
+}
+
 async function updatePerformance(token, id, key, val) {
   return fetch(configData.API_URL+'/performance', {
     method: 'PUT',
@@ -119,8 +137,7 @@ export default function MacthPerformanceRow(performanceObject) {
 
       try {
         // Make an API request to Scryfall to get the card name
-        return await fetch(`https://api.scryfall.com/cards/${commanderId}`)
-          .then(response => response.json())
+        return await getCard(userToken, commanderId)
           .then(cardData => {
             const commanderName = cardData.name;            
             setCommanderName(commanderName);
