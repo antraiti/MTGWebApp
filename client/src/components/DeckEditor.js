@@ -10,6 +10,11 @@ import configData from "./../config.json";
 import userData from '../util/UserData';
 import './Rules.scss';
 import './../App.scss';
+import './DeckEditor.scss';
+import Cropper from 'react-easy-crop'
+import { BarChart, Bar, Rectangle, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell,  } from 'recharts';
+
 
 //Form will just be a text field to dump in deck list formatted in a good way that each attribute can be pulled
 //separated by lines to denote, Commander, Partner, Companion, Deck, Sideboard
@@ -59,6 +64,16 @@ export const DeckEditor = () => {
     const [deckLegality, setDeckLegality] = useState();
     const [deckLegalityMessages, setDeckLegalityMessages] = useState([]);
 
+    // Cropping variables
+    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [zoom, setZoom] = useState(1)
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        console.log(croppedArea, croppedAreaPixels)
+    }
+
+    const [manaCurveValues, setManaCurveValues] = useState([]);
+    const [manaColorValues, setManaColorValues] = useState([]);
+
     useEffect(() => {
         let mounted = true;
         getDeckInfo(userToken, id)
@@ -71,10 +86,121 @@ export const DeckEditor = () => {
                 setCardList(item.cardlist);
                 setDeckLegality(item.legality.legal);
                 setDeckLegalityMessages(item.legality.messages);
+                
+                const chartValues = populateChart(item.cardlist);
+                setManaCurveValues(chartValues[0]);
+                setManaColorValues(chartValues[1]);
             }
             })
+
+
         return () => mounted = false;
+
       }, [])
+
+    const getCardListAsText = () => {
+        return cardList.sort((a,b) => a[1].name.localeCompare(b[1].name)).map(item => `${item[0].count} ${item[1].name}\n`);
+    }
+
+    function getCommanderImageUrl() {         
+        const commanderId = deckCommander;
+        if (!commanderId) {
+            return '';
+        }    
+
+        let url = 'https://cards.scryfall.io/art_crop/front';
+        url += '/' + commanderId.substring(0, 1);
+        url += '/' + commanderId.substring(1, 2) + '/';
+        url += commanderId + '.jpg';
+  
+        return url;      
+      }
+  
+    const commanderRowStyle = {
+        '--commander-image-url': `url(${getCommanderImageUrl()})`
+    }
+
+    const populateChart = (cardList) => {
+        const manaValues = {};
+        const manaColors = {
+            'C': 0, //colorless
+            'W': 0,
+            'U': 0,
+            'B': 0,
+            'R': 0,
+            'G': 0,
+            'M': 0 //multicolor
+        };
+        
+        cardList.forEach(deckCard => {
+            const card = deckCard[1];
+            
+            if (!manaValues[card.mv]) {
+                manaValues[card.mv] = 1;
+            } else {
+                manaValues[card.mv] += deckCard[0].count;
+            }
+
+            const uniqueChars = new Set();            
+            for (let i = 0; i < card.cost.length; i++) {
+                const char = card.cost[i];
+                if (char.match(/[A-Za-z]/) && !uniqueChars.has(char) && char !== 'X') {
+                    uniqueChars.add(char);
+                }
+            }            
+            
+            if (uniqueChars.size === 0) {
+                manaColors['C'] += deckCard[0].count;            
+            } else if (uniqueChars.size === 1) {
+                manaColors[Array.from(uniqueChars)[0]] += deckCard[0].count;
+            } else {
+                manaColors['M'] += deckCard[0].count;
+            }
+        });
+        
+        const manaValuesReturn = [];
+        for(const key of Object.keys(manaValues)) {
+            manaValuesReturn.push({
+                name: key,
+                uv: manaValues[key],
+                amt: manaValues[key],                
+            })
+        }
+
+        const colorValuesReturn = [];
+        for (const key of Object.keys(manaColors)) {
+            if (manaColors[key] !== 0) {
+                colorValuesReturn.push({
+                    name: key,
+                    value: manaColors[key],
+                });
+            }
+        }
+
+
+        return [manaValuesReturn, colorValuesReturn];
+    }
+
+    function getPieColor(dataEntry) {
+         if (dataEntry.name === 'C') {
+          return '#cccccc';
+        } else if (dataEntry.name === 'W') {
+          return '#ccccbb';
+        } else if (dataEntry.name === 'U') {
+          return '#4444cc';
+        } else if (dataEntry.name === 'B') {
+          return '#664466';
+        } else if (dataEntry.name === 'R') {
+          return '#cc4444';
+        } else if (dataEntry.name === 'G') {
+          return '#44cc44';
+        } else if (dataEntry.name === 'M') {
+          return '#cccc44';
+        } else {
+          return '#ff0000'; // Default color if no match
+        }
+      }
+    
 
     return (
         <Container style={{ padding: "20px" }}>
@@ -143,7 +269,70 @@ export const DeckEditor = () => {
                             )}
                     </Form>
                 </Card>
+            
+                <div className="footer-header mtg-font-bold">Deck Contents</div>
+                <Card className="commander-crop flex-row flex-align-space-between">                    
+                    <div className="flex-column">
+                        <div className="cropper-container">
+                            <Cropper
+                                image={getCommanderImageUrl()}
+                                crop={crop}
+                                zoom={zoom}
+                                aspect={16 / 4}
+                                onCropChange={setCrop}
+                                onCropComplete={onCropComplete}
+                                onZoomChange={setZoom}
+                            />
+                        </div>
+                        <div className="small accent light flex-align-center">Crop your commander's image above</div>
+                    </div>
+                    <div class="cropper-sample flex-row flex-grow" style={commanderRowStyle}>
+                        <ResponsiveContainer width="100%" height="100%">
+                        <PieChart width={400} height={400}>
+                            <Pie
+                                data={manaColorValues}
+                                dataKey="value"
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={50}
+                                outerRadius={90}
+                                label
+                            >
+                            {manaColorValues.map((entry, index) => (
+                                <Cell key={index} fill={getPieColor(entry)} />
+                            ))}
+                            </Pie>
+                        </PieChart>
+                        </ResponsiveContainer>
+                        
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                            width={500}
+                            height={300}
+                            data={manaCurveValues}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}
+                            >
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </Card>
+
+                <Card className="deck-contents-card">
+                
+                    <div className="card-grid">
+                        {getCardListAsText()}               
+                    </div>
+                </Card>
             </div>
+
         </Container>
     )
     }
