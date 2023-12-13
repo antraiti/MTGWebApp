@@ -80,10 +80,11 @@ export default function MacthPerformanceRow(performanceObject) {
     const [deckid, setDeckid] = useState([performanceData.deckid]);
     const [killedby, setKilledby] = useState([performanceData.killedby]);
     const [commanderName, setCommanderName] = useState();
+    const [cachedCards, setCachedCards] = useState({});
 
     useEffect(() => {
       getCommanderName();
-    })
+    }, [getCommanderName]);
 
     function selectedPlace(selectedPlace){
       updatePerformance(userToken, performanceData.id, 'placement', selectedPlace);
@@ -135,10 +136,19 @@ export default function MacthPerformanceRow(performanceObject) {
         return 'N/A';
       }
 
+      if (cachedCards[commanderId]) {
+        return cachedCards[commanderId].name
+      } else {
+        cachedCards[commanderId] = {};
+        setCachedCards(cachedCards);
+      }
+
       try {
-        // Make an API request to Scryfall to get the card name
+        // Make an API request to Scryfall to get the card name        
         return await getCard(userToken, commanderId)
           .then(cardData => {
+            cachedCards[commanderId] = cardData;
+            setCachedCards(cachedCards);
             const commanderName = cardData.name;            
             setCommanderName(commanderName);
           })        
@@ -228,7 +238,10 @@ export default function MacthPerformanceRow(performanceObject) {
               </h6>
             </div>
             <div className="flex-column flex-grow deck-name">
-              <div>
+              <div 
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={getDeckDisplayName()}
+              >
                 <DynamicLabelDropdown value={getDeckDisplayName()} 
                   items={performanceObject.decks.map((deck) => ({d: (new Date(Date.parse(deck.lastupdated)).toLocaleDateString("en-US") + ' ' + deck.name), v: deck.id})).reverse()}
                   selected={selectedDeck}

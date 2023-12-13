@@ -53,7 +53,7 @@
   width: 90px;
 }
 
-.deck-name a {
+.deck-name a:not(.dropdown-item) {
     overflow: hidden;
     line-height: 1rem;
     text-overflow: ellipsis;
