@@ -64,6 +64,8 @@ async function getUsers(token) {
     })
   }
 
+
+
 export const WeeklyDetails = () => {
     const { id } = useParams();
     const { userToken } = userData();
@@ -84,6 +86,11 @@ export const WeeklyDetails = () => {
             setEventDetails(item)
             setEventName(item.event.name)
             setDecks(item.decks)
+
+            const today = new Date();        
+            if (LocalDate(item.event.time) !== today.toLocaleDateString()) {
+                startPollingWithExponentialBackoff(userToken, id);
+            }
         }
         })
         getUsers(userToken)
@@ -92,8 +99,40 @@ export const WeeklyDetails = () => {
                 setUsers(item)
             }
             })
+
+        
         return () => mounted = false;
-      }, [])
+    }, [userToken, id])
+
+      const startPollingWithExponentialBackoff = (userToken, id) => {
+        let pollingInterval = 1000; // Initial polling interval (1 second)
+        const maxPollingInterval = 30000; // Maximum polling interval (30 seconds)
+      
+        const poll = () => {
+          getEventDetails(userToken, id)
+            .then(item => {
+              setEventDetails(item);
+              setEventName(item.event.name);
+              setDecks(item.decks);
+            })
+            .catch(error => {
+              console.error('Error fetching event details:', error);
+            })
+            .finally(() => {
+              console.log('poll test');
+      
+              // Adjust the polling interval with exponential backoff, but cap it at maxPollingInterval
+              pollingInterval = Math.min(pollingInterval * 1.5, maxPollingInterval);
+      
+              // Schedule the next poll
+              setTimeout(poll, pollingInterval);
+            });
+        };
+      
+        // Start the initial poll
+        poll();
+      };
+      
 
     return (
         <Container>
@@ -126,13 +165,14 @@ export const WeeklyDetails = () => {
                 </Row>
             </Row>
             <Row>
-                {eventDetails.matches != null && users != null && eventDetails.matches.map((match) => (
+                <button onClick={createMatch} className="add-match-button">+ Add Match</button>
+            </Row>
+            <Row>
+                {eventDetails.matches != null && users != null && eventDetails.matches.sort((a, b) => { return b.match.id - a.match.id }).map((match) => (
                     <MatchCard key={match.match.id} matchInfo={match} userlist={users} decklist={decks}></MatchCard>
                 ))}
             </Row>
-            <Row>
-                <button onClick={createMatch} className="add-match-button">+ Add Match</button>
-            </Row>
+            
         </Container>
     )
 }
