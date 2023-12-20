@@ -14,6 +14,7 @@ import './DeckEditor.scss';
 import Cropper from 'react-easy-crop'
 import { BarChart, Bar, Rectangle, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { PieChart, Pie, Sector, Cell,  } from 'recharts';
+import { GeneratePicpos, ParsePicpos } from "../util/DeckHelper";
 
 
 //Form will just be a text field to dump in deck list formatted in a good way that each attribute can be pulled
@@ -48,7 +49,7 @@ import { PieChart, Pie, Sector, Cell,  } from 'recharts';
         if(data.status >= 400) {
             throw new Error(data.message);
         }
-        window.location.reload(false); //refreshes page
+        if(prop != 'name' && prop != 'picpos') window.location.reload(false); //refreshes page we need to fix things so we dont use this
         return data.json();
     })
   }
@@ -63,12 +64,13 @@ export const DeckEditor = () => {
     const [cardList, setCardList] = useState([]);
     const [deckLegality, setDeckLegality] = useState();
     const [deckLegalityMessages, setDeckLegalityMessages] = useState([]);
+    const [ctimer, setCtimer] = useState(null);
 
     // Cropping variables
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
     const onCropComplete = (croppedArea, croppedAreaPixels) => {
-        console.log(croppedArea, croppedAreaPixels)
+        updateDeck(userToken, id, 'picpos', GeneratePicpos(crop, zoom));
     }
 
     const [manaCurveValues, setManaCurveValues] = useState([]);
@@ -90,6 +92,12 @@ export const DeckEditor = () => {
                 const chartValues = populateChart(item.cardlist);
                 setManaCurveValues(chartValues[0]);
                 setManaColorValues(chartValues[1]);
+
+                var picpos = ParsePicpos(item.deck.picpos);
+                if (picpos && picpos != null) {
+                    setCrop(picpos.crop);
+                    setZoom(picpos.zoom);
+                }
             }
             })
 
@@ -97,6 +105,18 @@ export const DeckEditor = () => {
         return () => mounted = false;
 
       }, [])
+    
+    function changeDelay(prop, val) {
+        if (ctimer) {
+          clearTimeout(ctimer);
+          setCtimer(null);
+        }
+        setCtimer(
+          setTimeout(() => {
+            updateDeck(userToken, id, prop, val);
+          }, 500)
+        );
+    }
 
     const getCardListAsText = () => {
         return cardList.sort((a,b) => a[1].name.localeCompare(b[1].name)).map(item => `${item[0].count} ${item[1].name}\n`);
@@ -213,7 +233,7 @@ export const DeckEditor = () => {
                     <Form>
                         <InputGroup>
                         <InputGroup.Text>Deck Name</InputGroup.Text>
-                        <Form.Control type="text" placeholder="Name" value={deckName ?? undefined} onChange={e => updateDeck(userToken, id, "name", e.target.value)}/>
+                        <Form.Control type="text" placeholder="Name" value={deckName ?? undefined} onChange={e => {setDeckName(e.target.value); changeDelay("name", e.target.value);}}/>
                         </InputGroup>
                         <br/>
                         <InputGroup>

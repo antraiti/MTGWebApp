@@ -88,7 +88,7 @@ export const WeeklyDetails = () => {
             setDecks(item.decks)
 
             const today = new Date();        
-            if (LocalDate(item.event.time) !== today.toLocaleDateString()) {
+            if (LocalDate(item.event.time) === today.toLocaleDateString()) {
                 startPollingWithExponentialBackoff(userToken, id);
             }
         }
