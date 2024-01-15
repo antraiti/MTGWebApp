@@ -74,6 +74,7 @@ export default function MacthPerformanceRow(performanceObject) {
     const starttime = performanceObject.starttime;
     const userDecks = performanceObject.decks;
     const endtime = performanceObject.endtime;
+    const picPos = performanceObject.pocpos;
 
     const [placement, setPlacement] = useState([performanceData.placement]);
     const [position, setPosition] = useState([performanceData.order]);
@@ -175,6 +176,12 @@ export default function MacthPerformanceRow(performanceObject) {
         return ""
       }
 
+      // If the user has selected a custom image, use that and return
+      if (activeDeck.customCommanderImageUrl) {
+        return activeDeck.customCommanderImageUrl;
+      }
+
+      // If the user has not selected a custom image, use the default art of the commander based on ID
       const commanderId = activeDeck.commander;
       if (!activeDeck.commander || activeDeck.commander == null || activeDeck.commander === null) {
         return 'https://cards.scryfall.io/art_crop/front/0/e/0eb0e8e7-266f-441e-b1cd-12b8ec3f7d71.jpg';
@@ -188,7 +195,9 @@ export default function MacthPerformanceRow(performanceObject) {
     }
 
     const performanceRowStyle = {
-      '--commander-image-url': `url(${getCommanderImageUrl()})`
+      '--commander-image-url': `url(${getCommanderImageUrl()})`,      
+      'background-image-position': `${picPos ? picPos.x + 'px' : ''} ${picPos ? picPos.y + 'px' : ''}`,
+      'background-image-size': `${picPos ? picPos.width + 'px' : ''} ${picPos ? picPos.height + 'px' : ''}`,
     }
 
     function getImageClass() {

@@ -76,6 +76,8 @@ export const DeckEditor = () => {
     const [manaCurveValues, setManaCurveValues] = useState([]);
     const [manaColorValues, setManaColorValues] = useState([]);
 
+    const [customCommanderImageUrl, setCustomCommanderImageUrl] = useState("");
+
     useEffect(() => {
         let mounted = true;
         getDeckInfo(userToken, id)
@@ -135,6 +137,25 @@ export const DeckEditor = () => {
   
         return url;      
       }
+
+    function getCommanderImageUrl() {
+        if (customCommanderImageUrl) {
+            return customCommanderImageUrl;
+        }
+
+        // Existing logic for default Scryfall image URL
+        const commanderId = deckCommander;
+        if (!commanderId) {
+            return '';
+        }
+
+        let url = 'https://cards.scryfall.io/art_crop/front';
+        url += '/' + commanderId.substring(0, 1);
+        url += '/' + commanderId.substring(1, 2) + '/';
+        url += commanderId + '.jpg';
+
+        return url;
+    }
   
     const commanderRowStyle = {
         '--commander-image-url': `url(${getCommanderImageUrl()})`
@@ -288,6 +309,19 @@ export const DeckEditor = () => {
                             </Card>
                             )}
                     </Form>
+                </Card>
+                <Card className="commander-crop flex-row flex-align-space-between">
+                    <InputGroup>
+                        <InputGroup.Text>Custom Commander Image URL</InputGroup.Text>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter URL"
+                            value={getCommanderImageUrl()}
+                            onChange={(e) => {
+                                setCommanderImageUrl(e.target.value);
+                            }}
+                        />
+                    </InputGroup>
                 </Card>
             
                 <div className="footer-header mtg-font-bold">Deck Contents</div>

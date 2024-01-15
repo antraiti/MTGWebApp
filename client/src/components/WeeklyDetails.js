@@ -77,6 +77,8 @@ export const WeeklyDetails = () => {
     const [showInputEle, setShowInputEle] = useState(false);
     const [users, setUsers] = useState([]);
     const [decks, setDecks] = useState([]);
+    let lastRetrievedDetails = null;
+
 
     useEffect(() => {
         let mounted = true;
@@ -111,6 +113,11 @@ export const WeeklyDetails = () => {
         const poll = () => {
           getEventDetails(userToken, id)
             .then(item => {
+              if (!lastRetrievedDetails || lastRetrievedDetails !== item) {
+                pollingInterval = 1000;
+              } 
+              lastRetrievedDetails = JSON.stringify(item);
+
               setEventDetails(item);
               setEventName(item.event.name);
               setDecks(item.decks);
