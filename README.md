@@ -1,3 +1,5 @@
+Officially Deprecated: We have switched over to https://github.com/antraiti/rumble-site
+
 Currently live at http://bbmtg.com/
 
 Project is split into Server and Client.
